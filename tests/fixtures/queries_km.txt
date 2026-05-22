@@ -1,0 +1,13 @@
+# Real-world recruitment search queries — Khmer, English, mixed.
+# Used to evaluate the query parsing agent. Contributors: add more.
+
+ខ្ញុំត្រូវការអ្នកធ្វើម្ហូបនៅសៀមរាប
+I need a cook in Siem Reap under $400
+tuktuk driver phnom penh, English speaking
+ត្រូវការបុគ្គលិកលក់ ភ្នំពេញ ៣០០ដុល្លារ
+looking for security guard, BKK1, night shift
+ត្រូវការបុគ្គលិកសម្អាត guesthouse Sihanoukville
+accountant phnom penh, English+Khmer, 3 years exp
+ខ្ញុំរកអ្នកបើកបររថយន្ត ភ្នំពេញ
+NGO field officer, Khmer + English, Battambang
+restaurant manager siem reap, $600-800

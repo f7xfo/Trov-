@@ -1,0 +1,17 @@
+{
+  "start_candidate": "Welcome to SrokWork! 🇰🇭\n\nSend me your CV (PDF, photo, or just describe your experience in a message). I'll create your profile so employers can find you.\n\nCommands:\n/profile — view or edit your profile\n/help — get help\n/mydata — export or delete your data",
+  "start_employer": "Welcome, employer! 🇰🇭\n\nDescribe the candidate you need — in Khmer or English. For example:\n• \"I need a cook in Siem Reap under $400\"\n• \"តួនាទីបុគ្គលិកលក់ ភ្នំពេញ\"\n\nI'll find matching profiles instantly.\n\nCommands:\n/search — start a new search\n/alerts — manage saved alerts\n/help — get help",
+  "ask_role": "Are you looking for work, or hiring?",
+  "role_candidate": "👤 I'm looking for work",
+  "role_employer": "🏢 I'm hiring",
+  "cv_received": "Got it. Reading your CV now... ⏳",
+  "cv_extracted": "Here's what I understood:\n\n*{headline}*\n📍 {location}\n💼 {years} years experience\n💰 Looking for ${salary}/month\n\nSkills: {skills}\nLanguages: {languages}\n\nIs this right? Reply ✅ to confirm or send corrections.",
+  "cv_published": "Your profile is live ✨\n\nEmployers can now find you. You'll be notified when someone is interested.",
+  "search_running": "Searching... ⏳",
+  "search_results": "Found {count} matching candidates:",
+  "search_no_results": "No matches yet — but I'll alert you when a candidate matches your search.\n\nTap below to save this as an alert.",
+  "save_alert": "🔔 Save as alert",
+  "alert_saved": "Alert saved. I'll message you when new candidates match.",
+  "error_generic": "Something went wrong. Please try again in a moment.",
+  "help": "SrokWork helps Cambodians find work and SMEs find people.\n\n— It's free, forever.\n— Available on Telegram, Messenger, and web.\n— Built in Cambodia.\n\nFor support: github.com/YOUR-ORG/srokwork-core/issues"
+}
