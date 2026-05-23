@@ -1,16 +1,334 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trov — Free Recruitment for Cambodia</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trov — ការងារដោយទំនុកចិត្ត · Work, with Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--royal:#032EA1;--royal-deep:#021F6E;--royal-light:#2A55C7;--royal-tint:#EEF2FC;--royal-tint-2:#E0E8FA;
+--nation:#E00025;--nation-deep:#B0001D;--nation-tint:#FDECEE;
+--gold:#B8862A;--gold-bright:#D4A53A;--gold-tint:#FAF3E2;
+--paper:#FBFAF7;--white:#FFFFFF;--line:#E8E6DF;--line-2:#DFDCD3;
+--ink:#1A1F2E;--ink-soft:#3A4258;--muted:#6B7490;--dim:#9AA2BC;
+--green:#1F9D6B;--green-tint:#E7F6EF;--amber:#C98A1E;
+--radius:16px;--radius-sm:10px;
+--shadow-sm:0 1px 3px rgba(26,31,46,0.06),0 1px 2px rgba(26,31,46,0.04);
+--shadow:0 4px 16px rgba(26,31,46,0.08);
+--shadow-lg:0 12px 40px rgba(3,46,161,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:'Outfit','Kantumruy Pro',sans-serif;min-height:100vh;overflow-x:hidden}
+.app-shell{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:264px;background:var(--white);border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0}
+.sidebar-logo{padding:24px 22px 16px}
+.logo-mark{display:flex;align-items:center;gap:11px}
+.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--royal) 0%,var(--royal-deep) 100%);border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--shadow)}
+.logo-icon svg{width:27px;height:27px;fill:#fff}
+.logo-text{font-family:'Fraunces',serif;font-size:24px;font-weight:900;letter-spacing:-0.5px;color:var(--ink);line-height:1}
+.logo-sub{font-family:'Kantumruy Pro';font-size:10px;color:var(--gold);letter-spacing:0.5px;margin-top:3px;font-weight:500}
+.flag-stripe{height:3px;margin:14px 22px 0;border-radius:2px;background:linear-gradient(90deg,var(--royal) 0% 28%,var(--nation) 28% 72%,var(--royal) 72% 100%)}
+.nav-section{padding:14px 12px}
+.nav-label{font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim);padding:0 12px;margin-bottom:8px;font-weight:700}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;transition:all 0.16s;color:var(--ink-soft);font-size:14px;font-weight:500;position:relative}
+.nav-item:hover{background:var(--paper);color:var(--ink)}
+.nav-item.active{background:var(--royal-tint);color:var(--royal);font-weight:600}
+.nav-item.active::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:3px;background:var(--gold-bright);border-radius:2px}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--nation);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
+.sidebar-footer{margin-top:auto;padding:14px;border-top:1px solid var(--line)}
+.user-chip{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--paper);cursor:pointer}
+.user-avatar{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--nation),var(--nation-deep));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.user-name{font-size:13px;font-weight:600}
+.user-tier{font-size:10px;color:var(--gold);margin-top:1px}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.topbar{height:62px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);flex-shrink:0;background:var(--white)}
+.topbar-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.btn-icon{width:36px;height:36px;border-radius:var(--radius-sm);border:1px solid var(--line-2);background:var(--white);cursor:pointer;color:var(--muted);font-size:15px;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.btn-icon:hover{background:var(--paper);color:var(--ink)}
+.lang-toggle{display:flex;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-sm);padding:3px;gap:2px}
+.lang-btn{padding:5px 11px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;color:var(--muted);border:none;background:transparent;font-family:inherit}
+.lang-btn.active{background:var(--royal);color:#fff}
+.content{flex:1;overflow-y:auto;padding:28px}
+.screen{display:none}
+.screen.active{display:block}
+.screen.active>*{animation:fadeUp 0.4s ease both}
+.screen.active>*:nth-child(2){animation-delay:.06s}
+.screen.active>*:nth-child(3){animation-delay:.12s}
+.screen.active>*:nth-child(4){animation-delay:.18s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:38px 34px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--royal) 0% 28%,var(--nation) 28% 72%,var(--royal) 72% 100%)}
+.hero-temple{position:absolute;right:-10px;bottom:-20px;width:240px;height:180px;opacity:0.05;pointer-events:none}
+.hero-temple svg{width:100%;height:100%;fill:var(--royal)}
+.hero-eyebrow{font-family:'Kantumruy Pro';font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:600;position:relative;z-index:1}
+.hero-title{font-family:'Fraunces',serif;font-size:32px;font-weight:900;line-height:1.12;margin-bottom:8px;color:var(--royal-deep);letter-spacing:-0.8px;position:relative;z-index:1}
+.hero-title-km{font-family:'Kantumruy Pro';font-size:16px;font-weight:400;color:var(--muted);margin-bottom:26px;position:relative;z-index:1}
+.search-bar{display:flex;gap:10px;position:relative;z-index:1}
+.search-input-wrap{flex:1;position:relative}
+.search-icon{position:absolute;left:17px;top:50%;transform:translateY(-50%);color:var(--royal);font-size:16px}
+.search-input{width:100%;background:var(--paper);border:2px solid var(--line);border-radius:var(--radius);padding:15px 16px 15px 46px;color:var(--ink);font-size:14px;font-family:inherit;outline:none;transition:all 0.2s;font-weight:500}
+.search-input:focus{border-color:var(--royal);background:#fff}
+.search-input::placeholder{color:var(--dim);font-weight:400}
+.search-btn{background:var(--nation);color:#fff;border:none;border-radius:var(--radius);padding:0 26px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.18s;white-space:nowrap;font-family:inherit;box-shadow:0 4px 14px rgba(224,0,37,0.25)}
+.search-btn:hover{background:var(--nation-deep);transform:translateY(-2px)}
+.search-examples{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.example-chip{background:var(--royal-tint);border:1px solid var(--royal-tint-2);border-radius:20px;padding:6px 13px;font-size:12px;color:var(--royal);cursor:pointer;transition:all 0.15s;font-weight:500}
+.example-chip:hover{background:var(--royal-tint-2)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:17px 19px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+.stat-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,var(--royal))}
+.stat-value{font-family:'Fraunces',serif;font-size:26px;font-weight:900;letter-spacing:-1px}
+.stat-label{font-size:11px;color:var(--muted);margin-top:2px}
+.trust-banner{background:var(--gold-tint);border:1px solid #EBD9A8;border-radius:var(--radius);padding:22px 26px;margin-bottom:24px;display:flex;align-items:center;gap:22px}
+.trust-shield{width:56px;height:56px;flex-shrink:0;background:linear-gradient(135deg,var(--gold-bright),var(--gold));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 5px 16px rgba(184,134,42,0.3)}
+.trust-text h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-bottom:4px;color:var(--ink)}
+.trust-text p{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.section-title{font-family:'Fraunces',serif;font-size:16px;font-weight:600}
+.section-action{font-size:12px;color:var(--royal);cursor:pointer;font-weight:600}
+.alerts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.alert-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow-sm)}
+.alert-card:hover{border-color:var(--gold-bright)}
+.alert-dot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:4px;flex-shrink:0;box-shadow:0 0 0 3px var(--green-tint)}
+.alert-query{font-size:13px;font-weight:600;margin-bottom:3px}
+.alert-meta{font-size:11px;color:var(--muted)}
+.alert-count{margin-left:auto;font-size:11px;background:var(--green-tint);color:var(--green);padding:2px 8px;border-radius:20px;font-weight:700}
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
+.results-query{font-family:'Fraunces',serif;font-size:22px;font-weight:600;letter-spacing:-0.3px}
+.results-count{font-size:13px;color:var(--muted);margin-top:3px}
+.results-actions{display:flex;gap:8px}
+.btn-outline{background:var(--white);border:1.5px solid var(--line-2);border-radius:var(--radius-sm);padding:8px 15px;color:var(--ink-soft);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:inherit}
+.btn-outline:hover{border-color:var(--royal);color:var(--royal)}
+.btn-primary{background:var(--royal);border:none;border-radius:var(--radius-sm);padding:8px 17px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:inherit}
+.btn-primary:hover{background:var(--royal-light)}
+.sort-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.sort-chip{padding:7px 15px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--line-2);color:var(--muted);transition:all 0.15s;background:var(--white);font-family:inherit;font-weight:500}
+.sort-chip.active{background:var(--royal-tint);border-color:var(--royal);color:var(--royal);font-weight:600}
+.candidate-list{display:flex;flex-direction:column;gap:12px}
+.candidate-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;display:flex;gap:16px;cursor:pointer;transition:all 0.2s;position:relative;box-shadow:var(--shadow-sm)}
+.candidate-card:hover{border-color:var(--gold-bright);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.rank-badge{position:absolute;top:14px;right:16px;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.5px}
+.candidate-avatar{width:52px;height:52px;border-radius:14px;background:var(--royal-tint);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid var(--royal-tint-2)}
+.candidate-name{font-size:15px;font-weight:600;margin-bottom:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.candidate-name .km{font-family:'Kantumruy Pro';font-weight:400;font-size:12px;color:var(--muted)}
+.candidate-meta{display:flex;gap:14px;font-size:12px;color:var(--muted);margin:6px 0;flex-wrap:wrap}
+.meta-item{display:flex;align-items:center;gap:4px}
+.avail-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600}
+.avail-now{background:var(--green-tint);color:var(--green)}
+.avail-soon{background:#FBF1DC;color:var(--amber)}
+.candidate-skills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.skill-tag{background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:3px 10px;font-size:11px;color:var(--ink-soft)}
+.rating-badge{display:inline-flex;align-items:center;gap:5px;background:var(--gold-tint);border:1px solid #EBD9A8;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;color:var(--gold)}
+.rating-badge .count{color:var(--dim);font-weight:400;font-size:11px}
+.verified-tick{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--green);font-weight:600}
+.card-actions{margin-left:auto;display:flex;flex-direction:column;gap:6px;justify-content:center;flex-shrink:0}
+.action-btn{padding:8px 17px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:inherit;white-space:nowrap;text-align:center}
+.action-btn.primary{background:var(--royal);color:#fff;border:none}
+.action-btn.primary:hover{background:var(--royal-light)}
+.action-btn.secondary{background:var(--white);border:1.5px solid var(--line-2);color:var(--ink-soft)}
+.action-btn.secondary:hover{border-color:var(--royal);color:var(--royal)}
+.profile-hero{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:30px;margin-bottom:18px;display:flex;gap:26px;align-items:flex-start;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+.profile-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--royal),var(--nation))}
+.profile-avatar-lg{width:84px;height:84px;border-radius:20px;background:var(--royal-tint);display:flex;align-items:center;justify-content:center;font-size:34px;flex-shrink:0;border:1px solid var(--royal-tint-2)}
+.profile-name-lg{font-family:'Fraunces',serif;font-size:23px;font-weight:600;letter-spacing:-0.3px;margin-bottom:3px}
+.profile-name-km{font-family:'Kantumruy Pro';font-size:15px;color:var(--muted);margin-bottom:12px}
+.profile-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.profile-tag{background:var(--paper);border-radius:8px;padding:5px 13px;font-size:12px;color:var(--ink-soft);border:1px solid var(--line)}
+.profile-actions-row{margin-left:auto;display:flex;flex-direction:column;gap:8px}
+.btn-message{background:var(--nation);color:#fff;border:none;border-radius:var(--radius);padding:11px 26px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(224,0,37,0.22)}
+.btn-rate{background:var(--white);border:1.5px solid var(--gold-bright);color:var(--gold);border-radius:var(--radius);padding:10px 26px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.reputation-card{background:linear-gradient(135deg,var(--gold-tint),var(--white));border:1px solid #EBD9A8;border-radius:20px;padding:26px;margin-bottom:18px;box-shadow:var(--shadow-sm)}
+.rep-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+.rep-score-block{display:flex;align-items:center;gap:18px}
+.rep-big-score{font-family:'Fraunces',serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;letter-spacing:-2px}
+.rep-stars{font-size:18px;color:var(--gold-bright);letter-spacing:2px}
+.rep-count{font-size:12px;color:var(--muted);margin-top:4px}
+.rep-verified-pill{background:var(--green-tint);color:var(--green);border:1px solid #B6E2CE;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.rep-categories{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rep-cat{background:var(--white);border-radius:12px;padding:14px 16px;border:1px solid var(--line)}
+.rep-cat-label{font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between}
+.rep-cat-val{font-weight:700}
+.rep-bar{height:6px;background:var(--paper);border-radius:3px;overflow:hidden}
+.rep-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--gold-bright))}
+.rep-bar-fill.green{background:linear-gradient(90deg,var(--green),#34B883)}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.info-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+.info-card-title{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:700}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.info-row:last-child{border-bottom:none}
+.info-key{color:var(--muted)}
+.info-val{font-weight:600}
+.info-val.green{color:var(--green)}
+.info-val.gold{color:var(--gold)}
+.reviews-list{display:flex;flex-direction:column;gap:10px}
+.review-item{background:var(--paper);border-radius:12px;padding:14px 16px;border-left:3px solid var(--gold-bright)}
+.review-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px}
+.review-stars{color:var(--gold-bright);font-size:13px}
+.review-cats{display:flex;gap:6px}
+.review-cat-chip{font-size:10px;padding:2px 8px;border-radius:12px;font-weight:600}
+.review-cat-chip.yes{background:var(--green-tint);color:var(--green)}
+.review-text{font-size:13px;color:var(--ink);line-height:1.5}
+.review-author{font-size:11px;color:var(--dim);margin-top:6px}
+.rate-flow{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm)}
+.rate-flow-title{font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:6px}
+.rate-flow-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
+.rate-q{margin-bottom:18px}
+.rate-q-label{font-size:13px;font-weight:600;margin-bottom:10px}
+.rate-stars-input{font-size:28px;color:var(--line-2);cursor:pointer;letter-spacing:4px}
+.rate-stars-input span{transition:color 0.15s}
+.rate-stars-input span.lit{color:var(--gold-bright)}
+.rate-toggle-group{display:flex;gap:8px}
+.rate-toggle{flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--line-2);background:var(--white);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:inherit;text-align:center}
+.rate-toggle.yes-active{border-color:var(--green);background:var(--green-tint);color:var(--green)}
+.rate-toggle.no-active{border-color:var(--nation);background:var(--nation-tint);color:var(--nation)}
+.rate-note{margin-top:18px;padding:14px 16px;background:var(--royal-tint);border-radius:10px;font-size:12px;color:var(--ink-soft);line-height:1.55;border:1px solid var(--royal-tint-2)}
+.bot-header{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.bot-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+.bot-card::after{content:attr(data-icon);position:absolute;right:20px;bottom:16px;font-size:42px;opacity:0.1}
+.bot-card-name{font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:4px}
+.bot-card-desc{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.bot-status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+.bot-status.live{color:var(--green)}
+.bot-status.live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-tint)}
+.chat-demo{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.chat-demo-title{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:700}
+.chat-messages{display:flex;flex-direction:column;gap:8px}
+.msg{max-width:78%;padding:11px 15px;border-radius:14px;font-size:13px;line-height:1.5}
+.msg.bot{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-radius:4px 14px 14px 14px}
+.msg.user{background:var(--royal);color:#fff;align-self:flex-end;border-radius:14px 4px 14px 14px;font-weight:500}
+.msg-km{font-family:'Kantumruy Pro'}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.kpi-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--royal))}
+.kpi-icon{font-size:20px;margin-bottom:10px}
+.kpi-value{font-family:'Fraunces',serif;font-size:30px;font-weight:900;letter-spacing:-1px}
+.kpi-label{font-size:11px;color:var(--muted);margin-top:4px}
+.kpi-trend{font-size:11px;margin-top:6px;font-weight:700;color:var(--green)}
+.killbox{background:var(--nation-tint);border:1px solid #F5C6CE;border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.killbox-title{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--nation-deep);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.kill-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F5C6CE;font-size:13px}
+.kill-row:last-child{border-bottom:none}
+.kill-status{margin-left:auto;font-weight:700;font-size:12px;padding:3px 10px;border-radius:20px}
+.kill-pass{background:var(--green-tint);color:var(--green)}
+.kill-watch{background:#FBF1DC;color:var(--amber)}
+.timeline{position:relative;padding-left:30px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold-bright),var(--line-2))}
+.timeline-item{position:relative;margin-bottom:24px}
+.timeline-dot{position:absolute;left:-26px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--gold-bright);border:2px solid var(--white);box-shadow:0 0 0 2px var(--gold-bright)}
+.timeline-dot.done{background:var(--green);box-shadow:0 0 0 2px var(--green)}
+.timeline-dot.future{background:var(--line-2);box-shadow:0 0 0 2px var(--line-2)}
+.timeline-period{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;font-weight:700}
+.timeline-title{font-family:'Fraunces',serif;font-size:15px;font-weight:600;margin-bottom:6px}
+.timeline-items{font-size:12px;color:var(--muted);line-height:1.7}
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;height:66px;background:var(--white);border-top:1px solid var(--line);z-index:100;justify-content:space-around;align-items:center;padding:0 8px}
+.mob-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 12px;border-radius:8px;cursor:pointer;color:var(--dim);font-size:10px;transition:color 0.15s;background:none;border:none;font-family:inherit}
+.mob-btn .icon{font-size:18px}
+.mob-btn.active{color:var(--royal)}
+@media(max-width:900px){.sidebar{display:none}.stats-row{grid-template-columns:1fr 1fr}.profile-grid,.rep-categories,.bot-header,.alerts-grid,.kpi-grid{grid-template-columns:1fr}.mobile-bar{display:flex}.content{padding-bottom:82px}.profile-hero{flex-direction:column}.profile-actions-row{flex-direction:row;margin-left:0}.card-actions{flex-direction:row;margin-left:0;width:100%;margin-top:12px}.candidate-card{flex-wrap:wrap}}
+@media(max-width:600px){.content{padding:16px}.topbar{padding:0 16px}.hero{padding:24px}.hero-title{font-size:24px}.search-bar{flex-direction:column}.stats-row{grid-template-columns:1fr 1fr;gap:8px}}
+.toast{position:fixed;top:20px;right:20px;background:var(--white);border:1px solid #B6E2CE;border-radius:var(--radius);padding:14px 18px;font-size:13px;z-index:999;display:flex;align-items:center;gap:11px;box-shadow:var(--shadow-lg);transform:translateX(130%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);max-width:310px}
+.toast.show{transform:translateX(0)}
+.toast-icon{font-size:18px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="app-shell">
+<nav class="sidebar">
+<div class="sidebar-logo"><div class="logo-mark"><div class="logo-icon"><svg viewBox="0 0 100 100"><path d="M50 12 L56 24 L44 24 Z M30 30 L36 42 L24 42 Z M70 30 L76 42 L64 42 Z M20 48 L80 48 L80 54 L75 54 L75 70 L70 70 L70 54 L58 54 L58 70 L53 70 L53 54 L47 54 L47 70 L42 70 L42 54 L30 54 L30 70 L25 70 L25 54 L20 54 Z M16 74 L84 74 L84 80 L16 80 Z M12 84 L88 84 L88 88 L12 88 Z"/></svg></div><div><div class="logo-text">Trov</div><div class="logo-sub">ការងារដោយទំនុកចិត្ត</div></div></div></div>
+<div class="flag-stripe"></div>
+<div class="nav-section"><div class="nav-label">Employer · ចៅហ្វាយ</div>
+<div class="nav-item active" onclick="showScreen('search', this)"><span class="nav-icon">🔍</span> Search Candidates</div>
+<div class="nav-item" onclick="showScreen('alerts', this)"><span class="nav-icon">🔔</span> My Alerts <span class="nav-badge">2</span></div>
+<div class="nav-item" onclick="showScreen('messages', this)"><span class="nav-icon">💬</span> Messages <span class="nav-badge">3</span></div>
+</div>
+<div class="nav-section"><div class="nav-label">Trust · ទំនុកចិត្ត</div>
+<div class="nav-item" onclick="showScreen('rating', this)"><span class="nav-icon">⭐</span> How Ratings Work</div>
+<div class="nav-item" onclick="showScreen('analytics', this)"><span class="nav-icon">📊</span> Impact</div>
+<div class="nav-item" onclick="showScreen('roadmap', this)"><span class="nav-icon">🗺️</span> Roadmap</div>
+</div>
+<div class="nav-section"><div class="nav-label">Platform</div>
+<div class="nav-item" onclick="showScreen('bots', this)"><span class="nav-icon">🤖</span> Bot Channels</div>
+<div class="nav-item" onclick="showScreen('submit', this)"><span class="nav-icon">📄</span> Submit CV</div>
+</div>
+<div class="sidebar-footer"><div class="user-chip"><div class="user-avatar">AK</div><div><div class="user-name">Alex K.</div><div class="user-tier">⭐ Founding Member</div></div></div></div>
+</nav>
+<div class="main">
+<div class="topbar"><div class="topbar-title" id="topbar-title">Search Candidates</div><div class="topbar-actions"><div class="lang-toggle"><button class="lang-btn active" onclick="setLang('EN',this)">EN</button><button class="lang-btn" onclick="setLang('KM',this)">ខ្មែរ</button></div><button class="btn-icon" onclick="showToast()">🔔</button><button class="btn-icon">⚙️</button></div></div>
+<div class="content">
+<div class="screen active" id="screen-search">
+<div class="hero"><div class="hero-temple"><svg viewBox="0 0 100 100"><path d="M50 12 L56 24 L44 24 Z M30 30 L36 42 L24 42 Z M70 30 L76 42 L64 42 Z M20 48 L80 48 L80 54 L75 54 L75 70 L70 70 L70 54 L58 54 L58 70 L53 70 L53 54 L47 54 L47 70 L42 70 L42 54 L30 54 L30 70 L25 70 L25 54 L20 54 Z M16 74 L84 74 L84 80 L16 80 Z M12 84 L88 84 L88 88 L12 88 Z"/></svg></div><div class="hero-eyebrow">ស្វែងរកដោយភាសាធម្មជាតិ · AI Natural Language Search</div><div class="hero-title">Find trusted people.<br>Hire with confidence.</div><div class="hero-title-km">ស្វែងរកបុគ្គលិកដែលអាចទុកចិត្តបាន ដោយប្រើភាសារបស់អ្នក</div>
+<div class="search-bar"><div class="search-input-wrap"><span class="search-icon">🔍</span><input class="search-input" id="search-field" type="text" placeholder="&quot;cook Siem Reap under $400&quot; · &quot;ខ្ញុំត្រូវការអ្នកលក់ BKK1&quot;"></div><button class="search-btn" onclick="runSearch()">Search →</button></div>
+<div class="search-examples"><div class="example-chip" onclick="fillSearch('Cook · Siem Reap · under $400')">Cook · Siem Reap · &lt;$400</div><div class="example-chip" onclick="fillSearch('Receptionist · BKK1 · English')">Receptionist · BKK1 · English</div><div class="example-chip" onclick="fillSearch('Security · Chinese speaker · PP')">Security · Chinese · PP</div><div class="example-chip" onclick="fillSearch('ការងារគ្រួសារ ភ្នំពេញ $200')">ការងារគ្រួសារ (Khmer)</div></div></div>
+<div class="trust-banner"><div class="trust-shield">🛡️</div><div class="trust-text"><h3>Every employer is rated by real workers</h3><p>Before you contact anyone — and before they contact you — both sides see a verified reputation built from real, on-platform hiring. No anonymous Telegram numbers. No recruitment scams. This is what makes Trov different.</p></div></div>
+<div class="stats-row"><div class="stat-card" style="--accent:var(--royal)"><div class="stat-value" style="color:var(--royal)">1,247</div><div class="stat-label">Active Profiles</div></div><div class="stat-card" style="--accent:var(--green)"><div class="stat-value" style="color:var(--green)">89</div><div class="stat-label">Available Now</div></div><div class="stat-card" style="--accent:var(--gold-bright)"><div class="stat-value" style="color:var(--gold)">3,104</div><div class="stat-label">Verified Ratings</div></div><div class="stat-card" style="--accent:var(--nation)"><div class="stat-value" style="color:var(--nation)">412</div><div class="stat-label">Confirmed Hires</div></div></div>
+<div class="section-header"><div class="section-title">🔔 Your Active Alerts</div><div class="section-action" onclick="showScreen('alerts')">View all →</div></div>
+<div class="alerts-grid"><div class="alert-card"><div class="alert-dot"></div><div><div class="alert-query">Cook · Siem Reap · &lt;$400</div><div class="alert-meta">3 days ago · 12 matches</div></div><div class="alert-count">+2 new</div></div><div class="alert-card"><div class="alert-dot"></div><div><div class="alert-query">Receptionist · BKK1 · English</div><div class="alert-meta">1 week ago · 8 matches</div></div><div class="alert-count">+1 new</div></div></div></div>
+
+<div class="screen" id="screen-results">
+<div class="results-header"><div><div class="results-query" id="results-title">Results</div><div class="results-count" id="results-subtitle">12 candidates found</div></div><div class="results-actions"><button class="btn-outline" onclick="showScreen(&#39;search&#39;)">← Back</button><button class="btn-primary" onclick="showToast()">💾 Save Alert</button></div></div>
+<div class="sort-row"><button class="sort-chip active">Best Match</button><button class="sort-chip">Highest Rated ⭐</button><button class="sort-chip">Available Now</button><button class="sort-chip">Salary: Low</button></div>
+<div class="candidate-list">
+<div class="candidate-card" onclick="showScreen(&#39;profile&#39;)"><div class="rank-badge">★ BEST MATCH</div><div class="candidate-avatar">👨‍🍳</div><div style="flex:1"><div class="candidate-name">ចន្ទ័រ វិចិត្រ <span class="km">Chan Vichea</span> <span class="verified-tick">✓ Verified</span></div><div class="candidate-meta"><span class="meta-item">📍 Siem Reap</span><span class="meta-item">💰  –400/mo</span><span class="avail-badge avail-now">● Available now</span></div><div style="margin:8px 0"><span class="rating-badge">⭐ 4.8 <span class="count">· 12 ratings</span></span></div><div class="candidate-skills"><span class="skill-tag">Cook</span><span class="skill-tag">Kitchen Mgmt</span><span class="skill-tag">Khmer</span><span class="skill-tag">English B1</span><span class="skill-tag">4 yrs</span></div></div><div class="card-actions"><button class="action-btn primary">View</button><button class="action-btn secondary">💬 Message</button></div></div>
+<div class="candidate-card"><div class="rank-badge">#2</div><div class="candidate-avatar">👩‍🍳</div><div style="flex:1"><div class="candidate-name">Srey Mom <span class="verified-tick">✓ Verified</span></div><div class="candidate-meta"><span class="meta-item">📍 Siem Reap</span><span class="meta-item">💰 \80–350/mo</span><span class="avail-badge avail-soon">◐ Jan 15</span></div><div style="margin:8px 0"><span class="rating-badge">⭐ 4.5 <span class="count">· 7 ratings</span></span></div><div class="candidate-skills"><span class="skill-tag">Cook</span><span class="skill-tag">Pastry</span><span class="skill-tag">Khmer</span><span class="skill-tag">2 yrs</span></div></div><div class="card-actions"><button class="action-btn primary">View</button><button class="action-btn secondary">💬 Message</button></div></div>
+<div class="candidate-card"><div class="rank-badge">#3</div><div class="candidate-avatar">🧑‍🍳</div><div style="flex:1"><div class="candidate-name">លី ម៉េងហ័រ <span class="km">Ly Menghor</span></div><div class="candidate-meta"><span class="meta-item">📍 Siem Reap</span><span class="meta-item">💰 –400/mo</span><span class="avail-badge avail-now">● Available now</span></div><div style="margin:8px 0"><span class="rating-badge">⭐ 4.2 <span class="count">· 5 ratings</span></span></div><div class="candidate-skills"><span class="skill-tag">Cook</span><span class="skill-tag">Asian Cuisine</span><span class="skill-tag">Chinese basic</span><span class="skill-tag">3 yrs</span></div></div><div class="card-actions"><button class="action-btn primary">View</button><button class="action-btn secondary">💬 Message</button></div></div>
+</div></div>
+<div class="screen" id="screen-profile">
+<div style="display:flex;gap:12px;margin-bottom:18px;align-items:center"><button class="btn-outline" onclick="showScreen('results')">← Results</button><span style="font-size:12px;color:var(--gold)">★ Best Match</span></div>
+<div class="profile-hero"><div class="profile-avatar-lg">👨‍🍳</div><div style="flex:1"><div class="profile-name-lg">ចន្ទ័រ វិចិត្រ</div><div class="profile-name-km">Chan Vichea</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="verified-tick">✓ Identity verified</span><span class="avail-badge avail-now">● Available immediately</span></div><div class="profile-tags"><span class="profile-tag">📍 Siem Reap</span><span class="profile-tag">💰 $300–400/mo</span><span class="profile-tag">👔 Full-time</span><span class="profile-tag">🏨 Hospitality</span></div></div><div class="profile-actions-row"><button class="btn-message">💬 Message</button><button class="btn-rate" onclick="showScreen('rating')">⭐ Rate</button></div></div>
+<div class="reputation-card"><div class="rep-header"><div class="rep-score-block"><div class="rep-big-score">4.8</div><div><div class="rep-stars">★★★★★</div><div class="rep-count">from 12 verified hires</div></div></div><div class="rep-verified-pill">🛡️ All ratings verified</div></div><div class="rep-categories"><div class="rep-cat"><div class="rep-cat-label"><span>Reliable & punctual</span><span class="rep-cat-val" style="color:var(--green)">96%</span></div><div class="rep-bar"><div class="rep-bar-fill green" style="width:96%"></div></div></div><div class="rep-cat"><div class="rep-cat-label"><span>Skills as described</span><span class="rep-cat-val" style="color:var(--green)">92%</span></div><div class="rep-bar"><div class="rep-bar-fill green" style="width:92%"></div></div></div><div class="rep-cat"><div class="rep-cat-label"><span>Good communication</span><span class="rep-cat-val" style="color:var(--gold)">88%</span></div><div class="rep-bar"><div class="rep-bar-fill" style="width:88%"></div></div></div><div class="rep-cat"><div class="rep-cat-label"><span>Would hire again</span><span class="rep-cat-val" style="color:var(--green)">11/12</span></div><div class="rep-bar"><div class="rep-bar-fill green" style="width:92%"></div></div></div></div></div>
+<div class="profile-grid"><div class="info-card"><div class="info-card-title">Work Details</div><div class="info-row"><span class="info-key">Experience</span><span class="info-val">4 years</span></div><div class="info-row"><span class="info-key">Main Skill</span><span class="info-val">Cook</span></div><div class="info-row"><span class="info-key">Availability</span><span class="info-val green">Immediately</span></div><div class="info-row"><span class="info-key">Salary</span><span class="info-val gold">$300–400/mo</span></div></div><div class="info-card"><div class="info-card-title">Languages</div><div class="info-row"><span class="info-key">Khmer</span><span class="info-val green">Native</span></div><div class="info-row"><span class="info-key">English</span><span class="info-val">B1 — Intermediate</span></div><div class="info-row"><span class="info-key">Profile score</span><span class="info-val gold">87% complete</span></div></div></div>
+<div class="info-card"><div class="info-card-title">⭐ Verified Reviews (structured, not anonymous)</div><div class="reviews-list"><div class="review-item"><div class="review-top"><span class="review-stars">★★★★★</span><div class="review-cats"><span class="review-cat-chip yes">✓ Paid on time</span><span class="review-cat-chip yes">✓ Reliable</span></div></div><div class="review-text">Very reliable, hardworking. Always on time. Would hire again.</div><div class="review-author">— Verified hire · Angkor Village Resort · 2024</div></div><div class="review-item"><div class="review-top"><span class="review-stars">★★★★☆</span><div class="review-cats"><span class="review-cat-chip yes">✓ Skills match</span></div></div><div class="review-text">Good attitude, keeps kitchen clean and organized.</div><div class="review-author">— Verified hire · La Résidence d'Angkor · 2022</div></div></div></div>
+</div>
+
+<div class="screen" id="screen-rating">
+<div class="hero" style="padding:30px 34px;margin-bottom:22px"><div class="hero-eyebrow">ប្រព័ន្ធវាយតម្លៃ · The Heart of Trov</div><div class="hero-title" style="font-size:26px">Trust you can verify.<br>Reputation no one can buy.</div><div class="hero-title-km" style="margin-bottom:0">ការវាយតម្លៃពិតប្រាកដ ដែលគ្មាននរណាម្នាក់អាចទិញ ឬលុបបាន</div></div>
+<div class="stats-row" style="grid-template-columns:repeat(3,1fr)"><div class="stat-card" style="--accent:var(--gold-bright)"><div class="stat-value" style="font-size:17px;color:var(--gold)">Verified only</div><div class="stat-label">You can only rate someone you actually hired or met on Trov</div></div><div class="stat-card" style="--accent:var(--green)"><div class="stat-value" style="font-size:17px;color:var(--green)">Structured</div><div class="stat-label">Stars + fixed categories — never risky free-text accusations</div></div><div class="stat-card" style="--accent:var(--nation)"><div class="stat-value" style="font-size:17px;color:var(--nation)">Immutable</div><div class="stat-label">Truthful ratings can never be deleted for payment. Ever.</div></div></div>
+<div class="rate-flow"><div class="rate-flow-title">After a hire — rate in 20 seconds</div><div class="rate-flow-sub">What a worker sees when rating an employer (asymmetric: workers are protected more than employers).</div><div class="rate-q"><div class="rate-q-label">Overall experience</div><div class="rate-stars-input" id="star-input"><span class="lit" onclick="setStars(1)">★</span><span class="lit" onclick="setStars(2)">★</span><span class="lit" onclick="setStars(3)">★</span><span class="lit" onclick="setStars(4)">★</span><span onclick="setStars(5)">★</span></div></div><div class="rate-q"><div class="rate-q-label">Were you paid on time and in full?</div><div class="rate-toggle-group"><button class="rate-toggle yes-active" onclick="toggleRate(this,'yes')">✓ Yes</button><button class="rate-toggle" onclick="toggleRate(this,'no')">✗ No</button></div></div><div class="rate-q"><div class="rate-q-label">Did the job match what was advertised?</div><div class="rate-toggle-group"><button class="rate-toggle yes-active" onclick="toggleRate(this,'yes')">✓ Yes</button><button class="rate-toggle" onclick="toggleRate(this,'no')">✗ No</button></div></div><div class="rate-q" style="margin-bottom:0"><div class="rate-q-label">Would you work here again?</div><div class="rate-toggle-group"><button class="rate-toggle yes-active" onclick="toggleRate(this,'yes')">✓ Yes</button><button class="rate-toggle" onclick="toggleRate(this,'no')">✗ No</button></div></div><div class="rate-note">🛡️ <strong>Why structured, not free text?</strong> In Cambodia, publicly accusing an employer in open text can carry legal risk — even when true. Fixed yes/no categories protect both the worker who rates and the integrity of the system. A pattern of "not paid on time" across many workers speaks for itself, safely. This design is why a Ministry can endorse Trov without fear.</div></div>
+</div>
+
+<div class="screen" id="screen-bots">
+<div class="bot-header"><div class="bot-card" data-icon="✈️"><div class="bot-card-name">Telegram Bot</div><div class="bot-card-desc">@TrovBot — Zero-install. The market is already here, in chaos. Trov brings structure: CV in 3 min, natural-language search, ratings.</div><div class="bot-status live">Live · Phase 0 priority</div></div><div class="bot-card" data-icon="💬"><div class="bot-card-name">Messenger Bot</div><div class="bot-card-desc">Provincial reach. Same flows, simpler UI. Phase 2 — built once the Telegram loop is validated.</div><div class="bot-status" style="color:var(--dim)">○ Phase 2</div></div></div>
+<div class="chat-demo"><div class="chat-demo-title">📱 Telegram — Employer Search</div><div class="chat-messages"><div class="msg bot">🙏 Welcome to <strong>Trov!</strong><br>Type what you're looking for:<br><span style="color:var(--muted);font-size:12px">"I need a cook in Siem Reap under $400"</span></div><div class="msg user msg-km">ខ្ញុំត្រូវការអ្នកធ្វើម្ហូបនៅសៀមរាប $400</div><div class="msg bot">🔍 Found <strong>cook · Siem Reap · &lt;$400</strong><br>━━━━━━━━<br>👤 ចន្ទ័រ វ. <strong>⭐4.8</strong> 🛡️verified<br>📍 Siem Reap · 💰$300–400 · ✅ Now<br>✓ Paid-on-time 96% · ✓ Reliable<br>[View] [💬 Message]<br>━━━━━━━━<br>👤 Srey Mom <strong>⭐4.5</strong> 🛡️verified<br>[View] [💬 Message]</div><div class="msg user">Save as alert</div><div class="msg bot">✅ Alert saved! I'll notify you the instant a trusted match appears. 🔔</div></div></div>
+</div>
+<div class="screen" id="screen-analytics">
+<div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:6px">Impact Dashboard</div><div style="font-size:13px;color:var(--muted);margin-bottom:22px">Month 14 · The numbers we'll bring to the Ministry of Labour</div>
+<div class="kpi-grid"><div class="kpi-card" style="--accent:var(--royal)"><div class="kpi-icon">👤</div><div class="kpi-value" style="color:var(--royal)">1,247</div><div class="kpi-label">Workers with a profile</div><div class="kpi-trend">↑ +14%</div></div><div class="kpi-card" style="--accent:var(--nation)"><div class="kpi-icon">🤝</div><div class="kpi-value" style="color:var(--nation)">412</div><div class="kpi-label">Confirmed hires</div><div class="kpi-trend">↑ +38 this month</div></div><div class="kpi-card" style="--accent:var(--gold-bright)"><div class="kpi-icon">🛡️</div><div class="kpi-value" style="color:var(--gold)">23</div><div class="kpi-label">Bad-actor employers flagged by ratings</div><div class="kpi-trend">Workers protected</div></div></div>
+<div class="stats-row" style="margin-bottom:0"><div class="stat-card" style="--accent:var(--gold-bright)"><div class="stat-value" style="font-size:16px;color:var(--gold)">PUBLIC GOOD</div><div class="stat-label">Free forever for workers</div></div><div class="stat-card" style="--accent:var(--royal)"><div class="stat-value" style="color:var(--royal)">$0</div><div class="stat-label">Candidate cost · always</div></div><div class="stat-card" style="--accent:var(--green)"><div class="stat-value" style="color:var(--green)">~$60</div><div class="stat-label">Monthly infra (self-hosted)</div></div><div class="stat-card" style="--accent:var(--nation)"><div class="stat-value" style="font-size:16px;color:var(--nation)">Open Source</div><div class="stat-label">MIT · auditable</div></div></div>
+</div>
+
+<div class="screen" id="screen-roadmap">
+<div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:24px">Roadmap to National Infrastructure</div>
+<div class="timeline"><div class="timeline-item"><div class="timeline-dot done"></div><div class="timeline-period">Phase 0 · Month 1–2</div><div class="timeline-title">Telegram MVP</div><div class="timeline-items">Bot live · CV parsing (DeepSeek) · NL search · <strong>rating system</strong> · self-hosted</div></div><div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Phase 1 · Month 3–6</div><div class="timeline-title">Trust & Notifications</div><div class="timeline-items">Alert dispatch · cross-channel messaging · /mydata (LPDP) · reputation accumulates on priority verticals</div></div><div class="timeline-item"><div class="timeline-dot future"></div><div class="timeline-period">Phase 2 · Month 7–12</div><div class="timeline-title">PWA + Messenger</div><div class="timeline-items">Full web app (this design) · Messenger bot · provincial expansion · contributor community scaling</div></div><div class="timeline-item" style="margin-bottom:0"><div class="timeline-dot future"></div><div class="timeline-period">Phase 3 · Year 2</div><div class="timeline-title">🏛️ Public Partnership</div><div class="timeline-items">Non-profit foundation · pilot with National Employment Agency · present impact numbers to Ministry of Labour · Cambodia digital public good</div></div></div>
+</div>
+<div class="screen" id="screen-submit">
+<div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:6px">Submit Your CV — Free, Always</div><div style="font-size:13px;color:var(--muted);margin-bottom:22px">ដាក់ស្នើ CV ឥតគិតថ្លៃ · Be found by rated employers · Never pay anything</div>
+<div class="hero" style="padding:28px"><div class="hero-eyebrow">Step 1 of 2</div><div class="hero-title" style="font-size:20px;margin-bottom:18px">Upload your CV — AI does the rest</div><div style="background:var(--paper);border:2px dashed var(--royal-tint-2);border-radius:14px;padding:30px;text-align:center;cursor:pointer"><div style="font-size:32px;margin-bottom:8px">📎</div><div style="font-size:14px;color:var(--ink);font-weight:600">Drop your CV or <span style="color:var(--royal)">browse</span></div><div style="font-size:11px;color:var(--muted);margin-top:4px">PDF · Word · photo — DeepSeek extracts everything automatically</div></div><div style="display:flex;gap:10px;margin-top:16px"><div class="example-chip">✈️ Or via Telegram @TrovBot</div><div class="example-chip">💬 Or via Messenger</div></div></div>
+</div>
+<div class="screen" id="screen-alerts">
+<div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:20px">My Saved Alerts</div>
+<div style="display:flex;flex-direction:column;gap:12px"><div class="candidate-card" style="cursor:default"><div style="font-size:24px">🔔</div><div style="flex:1"><div style="font-size:15px;font-weight:600;margin-bottom:4px">Cook · Siem Reap · &lt;$400</div><div style="font-size:12px;color:var(--muted);margin-bottom:8px">Notified via Telegram</div><div style="display:flex;gap:8px"><span class="skill-tag">12 matches</span><span class="rating-badge" style="font-size:11px">+2 new</span></div></div><div class="card-actions"><button class="action-btn primary" onclick="fillSearch('Cook Siem Reap');showScreen('results')">View</button><button class="action-btn secondary">⏸ Pause</button></div></div><div class="candidate-card" style="cursor:default"><div style="font-size:24px">🔔</div><div style="flex:1"><div style="font-size:15px;font-weight:600;margin-bottom:4px">Receptionist · BKK1 · English</div><div style="font-size:12px;color:var(--muted);margin-bottom:8px">Notified via PWA push</div><div style="display:flex;gap:8px"><span class="skill-tag">8 matches</span><span class="rating-badge" style="font-size:11px">+1 new</span></div></div><div class="card-actions"><button class="action-btn primary">View</button><button class="action-btn secondary">⏸ Pause</button></div></div></div>
+</div>
+<div class="screen" id="screen-messages">
+<div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-bottom:6px">Messages</div><div style="font-size:12px;color:var(--muted);margin-bottom:20px">🔒 Private · phone numbers never shared</div>
+<div style="display:flex;flex-direction:column;gap:8px"><div class="candidate-card" style="cursor:pointer"><div class="candidate-avatar">👨‍🍳</div><div style="flex:1"><div style="font-size:14px;font-weight:600">ចន្ទ័រ វិចិត្រ <span class="rating-badge" style="font-size:10px">⭐4.8</span></div><div style="font-size:12px;color:var(--muted)">Are you still hiring? I'm very interested...</div></div><div style="text-align:right"><div style="font-size:11px;color:var(--dim)">2h</div><div style="background:var(--nation);color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-left:auto;margin-top:4px">1</div></div></div><div class="candidate-card" style="cursor:pointer;opacity:0.75"><div class="candidate-avatar">👩‍🍳</div><div style="flex:1"><div style="font-size:14px;font-weight:600">Srey Mom <span class="rating-badge" style="font-size:10px">⭐4.5</span></div><div style="font-size:12px;color:var(--muted)">Thank you! I'd love to discuss further...</div></div><div style="font-size:11px;color:var(--dim)">1d</div></div></div>
+</div>
+</div></div></div>
+<div class="mobile-bar"><button class="mob-btn active" onclick="showScreen('search',null,'mob')"><span class="icon">🔍</span>Search</button><button class="mob-btn" onclick="showScreen('rating',null,'mob')"><span class="icon">⭐</span>Trust</button><button class="mob-btn" onclick="showScreen('bots',null,'mob')"><span class="icon">🤖</span>Bots</button><button class="mob-btn" onclick="showScreen('messages',null,'mob')"><span class="icon">💬</span>Chat</button><button class="mob-btn" onclick="showScreen('submit',null,'mob')"><span class="icon">📄</span>CV</button></div>
+<div class="toast" id="toast"><span class="toast-icon">🛡️</span><div><div style="font-weight:700;font-size:13px">New trusted match!</div><div style="font-size:12px;color:var(--muted)">Cook · Siem Reap · ⭐4.9 · 96% paid-on-time</div></div></div>
+<script>
+const titles={search:'Search Candidates',results:'Search Results',profile:'Candidate Profile',rating:'How Ratings Work',bots:'Bot Channels',analytics:'Impact Dashboard',roadmap:'Roadmap',submit:'Submit Your CV',alerts:'My Alerts',messages:'Messages'};
+function showScreen(name,el,src){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+name)?.classList.add('active');document.getElementById('topbar-title').textContent=titles[name]||name;document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));if(el)el.classList.add('active');document.querySelectorAll('.mob-btn').forEach(b=>b.classList.remove('active'));document.querySelector('.content').scrollTop=0}
+function fillSearch(t){document.getElementById('search-field').value=t}
+function runSearch(){const q=document.getElementById('search-field').value||'Cook · Siem Reap';document.getElementById('results-title').textContent='"'+q+'"';document.getElementById('results-subtitle').textContent='12 candidates found · ranked by match + trust · 0.4s';showScreen('results')}
+let tTimer;function showToast(){const t=document.getElementById('toast');t.classList.add('show');clearTimeout(tTimer);tTimer=setTimeout(()=>t.classList.remove('show'),4500)}
+setTimeout(showToast,3500);
+document.querySelectorAll('.sort-chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.sort-chip').forEach(x=>x.classList.remove('active'));c.classList.add('active')}));
+function setLang(l,el){document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
+function setStars(n){document.querySelectorAll('#star-input span').forEach((s,i)=>s.classList.toggle('lit',i<n))}
+function toggleRate(btn,val){btn.parentElement.querySelectorAll('.rate-toggle').forEach(b=>b.classList.remove('yes-active','no-active'));btn.classList.add(val==='yes'?'yes-active':'no-active')}
+</script>
+</body></html>
