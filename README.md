@@ -90,16 +90,6 @@ Trov's rating system is **structured, verified, bidirectional, and immutable**:
 
 ---
 
-## Kill-Criteria (RULE_27)
-
-Trov is declared dead at Day 60 if **any** of:
-- Fewer than 50 candidates created a profile
-- Fewer than 5 employers ran repeat searches
-- Khmer query parsing fails on >40% of real queries
-
-Auto-checked daily via n8n and reported cold.
-
----
 
 ## Roadmap
 

@@ -129,7 +129,7 @@ WorkingNA serves the structured top of the pyramid. Trov serves the base — whe
 | Hybrid matching (filters + AI ranking) | Build |
 | **Structured rating system** | Build |
 | Saved search alerts | Build |
-| Kill-criteria auto-monitoring | Build |
+
 
 ### Stack
 DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pgvector · Redis · n8n (orchestration) · Self-hosted
@@ -173,11 +173,11 @@ Phase 0 (Months 1-2)     Phase 1 (Months 3-12)       Phase 2 (Months 13-18)
 │ CV Extraction    │    │ Cross-channel relay  │     │ Voice CV (Whisper)   │
 │ NL Search        │    │ Rating system v2     │     │ Khmer NLP fine-tune  │
 │ Rating System    │    │ Job posting flow     │     │ Local LLM (Ollama)   │
-│ Kill-Criteria    │    │ Self-hosting docs    │     │ Multi-country adapt. │
+
 └──────────────────┘    └─────────────────────┘     └──────────────────────┘
        │                          │                           │
   60-day gate               Public launch              Scale + replicate
-  (kill-criteria)           NEA partnership            Laos, Myanmar, Vietnam
+
 ```
 
 ### Metrics (18-month targets)
@@ -185,20 +185,6 @@ Phase 0 (Months 1-2)     Phase 1 (Months 3-12)       Phase 2 (Months 13-18)
 - ≥ 500 active employers
 - ≥ 5,000 verified ratings
 - Khmer parsing accuracy ≥ 85%
-
----
-
-## Slide 12 — Kill-Criteria: We Build It, We Test It, We Kill It If It Fails
-
-Trov is declared dead at Day 60 if **any** of these are true:
-
-| # | Criterion | Threshold | Auto-checked? |
-|---|---|---|---|
-| 1 | Candidates created a profile | < 50 | ✅ n8n daily |
-| 2 | Employers ran a repeat search | < 5 | ✅ n8n daily |
-| 3 | Khmer query parsing failure rate | > 40% | ✅ n8n daily |
-
-This is not pessimism. It is discipline. A free public good that nobody uses is not a public good — it is noise. We measure, and we kill what doesn't work.
 
 ---
 
@@ -234,7 +220,7 @@ Mentorship, network, visibility, and an introduction to the ecosystem that makes
 Endorsement and integration — make Trov visible to the workers who need it most.
 
 **The commitment from our side:**
-Open-source code. Free forever. Self-hostable. No data selling. Kill-criteria enforced. 60 days to prove it works.
+
 
 ---
 

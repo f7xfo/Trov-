@@ -5,6 +5,5 @@ Each service handles a domain:
 - matching: hybrid search (pgvector + structured filters)
 - profiles: candidate profile CRUD + embedding
 - alerts: saved search alerts
-- stats: kill-criteria metrics
 - users: user management
 """

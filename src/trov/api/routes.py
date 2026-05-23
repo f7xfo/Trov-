@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field
 
 from trov.core.logging import log
 from trov.db.session import get_db
-from trov.services import alerts, matching, profiles, ratings, stats, users
+from trov.services import alerts, matching, profiles, ratings, users
 
 router = APIRouter()
 
@@ -288,12 +288,4 @@ async def list_alerts(user_id: UUID, db=Depends(get_db)):
     return {"alerts": alert_list, "count": len(alert_list)}
 
 
-# ── Kill-Criteria Stats ──
 
-@router.get("/stats/kill-criteria")
-async def kill_criteria(db=Depends(get_db)):
-    """Get RULE_27 kill-criteria metrics (for n8n monitoring)."""
-    from datetime import date
-    # Launch date defaults to today until set in config
-    launch = date.today()
-    return await stats.get_kill_criteria_stats(db, launch_date=launch)

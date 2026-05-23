@@ -15,7 +15,6 @@
 6. [Database Schema](#6-database-schema)
 7. [API Endpoints](#7-api-endpoints)
 8. [n8n Orchestration](#8-n8n-orchestration)
-9. [Kill-Criteria Auto-Monitoring](#9-kill-criteria-auto-monitoring)
 10. [Deployment](#10-deployment)
 11. [Migration from SrokWork](#11-migration-from-srokwork)
 12. [FLAGS & Open Questions](#12-flags--open-questions)
@@ -80,7 +79,7 @@ Le brief prescrit Grammy.js en Phase 0. Justification technique :
 | Embeddings | `text-embedding-3-small` (OpenAI) ou `deepseek-embedding` | 1536 dimensions |
 | Database | PostgreSQL 16 + pgvector | Une seule DB, pas de vector store séparé |
 | Cache / Sessions | Redis | Session state bot + cache matching |
-| Orchestration | n8n (self-hosted) | Prescrit. Remplace arq pour les alerts + kill-criteria monitoring |
+
 | Container | Docker Compose | 4 services : api, bot, postgres, redis (n8n séparé) |
 
 ---
@@ -101,7 +100,7 @@ Le brief prescrit Grammy.js en Phase 0. Justification technique :
 | Profile confirmation flow | Candidate review → accept/edit → publish |
 | Save search as alert | Employer peut sauvegarder une recherche. n8n sweep toutes les 15 min |
 | i18n KM/EN | Tous les messages bot en Khmer et Anglais |
-| Kill-criteria monitoring | n8n workflow : compte candidats, comptage employers récurrents, test parsing Khmer → rapport J60 |
+
 
 ### ❌ OUT OF SCOPE (Phase 1+)
 
@@ -550,8 +549,6 @@ CRITICAL CONTEXT:
 }
 ```
 
-### 5.3 Test Suite — Parsing Khmer (Critique pour Kill-Criteria)
-
 ```python
 # tests/test_parsing_khmer.py
 # Ce fichier DOIT exister et être exécuté par n8n à J60
@@ -580,7 +577,7 @@ KHMER_TEST_QUERIES = [
     ("need nanny phnom penh english speaking", "nanny", "Phnom Penh"),
 ]
 
-# Kill-criteria : le parsing échoue si >40% de ces 20 requêtes
+
 # n'extraient pas le bon role AND location
 ```
 
@@ -708,7 +705,7 @@ LIMIT 20;
 | `GET` | `/ratings/user/{id}` | Get user's ratings | 0 |
 | `POST` | `/alerts` | Save search as alert | 0 |
 | `GET` | `/alerts/{user_id}` | List user's alerts | 0 |
-| `GET` | `/stats/kill-criteria` | Kill-criteria metrics (for n8n) | 0 |
+
 
 ### 7.2 Grammy.js Bot (Node.js/TypeScript)
 
@@ -758,16 +755,14 @@ Grammy.js Bot
 | Workflow | Trigger | Action |
 |---|---|---|
 | **alert_sweep** | Cron every 15 min | Query `GET /alerts/active` → for each alert, run hybrid search → if new matches since `last_run_at`, POST to Grammy.js bot webhook → bot sends notification to employer |
-| **kill_criteria_report** | Cron daily | Query `GET /stats/kill-criteria` → store in n8n data → at Day 60, generate final report |
+
 | **embedding_sync** | Cron every 5 min | Query profiles where `embedding IS NULL AND is_published = true` → compute embedding via DeepSeek API → PATCH profile |
 | **inactive_cleanup** | Cron weekly | Soft-delete profiles not updated in 90 days, conversations with no activity in 30 days |
 | **rating_prompt** | Cron daily | Query conversations where `last_activity_at > 24h ago AND rating_requested = false AND messages >= 4` → POST to bot webhook to send rating prompt |
 
-### 8.2 Kill-Criteria n8n Workflow (détaillé)
 
 ```yaml
-# n8n workflow: kill_criteria_report
-name: "Trov Kill-Criteria Monitor"
+
 
 trigger:
   - type: cron
@@ -777,7 +772,7 @@ nodes:
   - id: fetch_metrics
     type: http
     config:
-      url: "{{API_BASE_URL}}/stats/kill-criteria"
+
       method: GET
       headers:
         Authorization: "Bearer {{API_KEY}}"
@@ -786,7 +781,7 @@ nodes:
     type: database
     config:
       query: |
-        INSERT INTO kill_criteria_log
+
         (date, candidates_count, repeat_employers, khmer_parse_errors, khmer_parse_total)
         VALUES ($date, $candidates, $employers, $errors, $total)
         
@@ -816,7 +811,7 @@ nodes:
     config:
       chat_id: "{{ADMIN_CHAT_ID}}"
       text: |
-        ⚠️ TROV KILL-CRITERIA: FAIL at Day 60
+
         Failures: {{failures}}
         
   - id: notify_pass
@@ -824,62 +819,7 @@ nodes:
     config:
       chat_id: "{{ADMIN_CHAT_ID}}"
       text: |
-        ✅ TROV KILL-CRITERIA: PASS at Day 60
-```
 
----
-
-## 9. Kill-Criteria Auto-Monitoring
-
-### 9.1 API Endpoint
-
-```
-GET /stats/kill-criteria
-Authorization: Bearer <api_key>
-
-Response:
-{
-  "days_since_launch": 42,
-  "candidates_count": 127,
-  "repeat_employers": 8,
-  "khmer_parse_total": 150,
-  "khmer_parse_errors": 22,
-  "khmer_parse_error_rate": 0.147,
-  "launch_date": "2026-06-01T00:00:00Z"
-}
-```
-
-### 9.2 Définitions
-
-| Métrique | Définition | Seuil |
-|---|---|---|
-| `candidates_count` | Nombre de `candidate_profiles` avec `is_published = true` | ≥ 50 |
-| `repeat_employers` | Nombre d'employeurs ayant créé ≥ 2 `job_searches` sur des jours différents | ≥ 5 |
-| `khmer_parse_errors` | Nombre de `job_searches` où `role IS NULL OR location IS NULL` (indiquant échec du parsing) | — |
-| `khmer_parse_error_rate` | `khmer_parse_errors / khmer_parse_total` | ≤ 0.40 |
-
-### 9.3 SQL pour le comptage
-
-```sql
--- candidates_count
-SELECT COUNT(*) FROM candidate_profiles WHERE is_published = true;
-
--- repeat_employers
-SELECT COUNT(DISTINCT employer_id)
-FROM (
-    SELECT employer_id, COUNT(DISTINCT DATE(created_at)) AS active_days
-    FROM job_searches
-    GROUP BY employer_id
-    HAVING COUNT(DISTINCT DATE(created_at)) >= 2
-) sub;
-
--- khmer_parse_error_rate
-SELECT
-    COUNT(*) AS total,
-    COUNT(*) FILTER (WHERE role IS NULL OR location IS NULL) AS errors,
-    COUNT(*) FILTER (WHERE role IS NULL OR location IS NULL)::float / NULLIF(COUNT(*), 0) AS error_rate
-FROM job_searches
-WHERE raw_query ~ '[ក-៝]';  -- contient des caractères khmers
 ```
 
 ---
@@ -1066,7 +1006,7 @@ docker run -d \
 | **LPDP** | Loi sur la Protection des Données Personnelles (Cambodge, en cours d'adoption) |
 | **MoLVT** | Ministry of Labour and Vocational Training |
 | **NEA** | National Employment Agency (Cambodge) |
-| **Kill-Criteria** | RULE_27 : métriques objectives qui, si non atteintes à J60, déclarent le projet mort |
+
 
 ---
 
