@@ -24,7 +24,7 @@ Open-source, free recruitment platform for the workers who don't have LinkedIn.
 | | World A — LinkedIn Cambodia | World B — The Real Market |
 |---|---|---|
 | **Who** | White-collar, university graduates, English-speaking | Blue-collar, SME workers, informal economy |
-| **Where** | WorkingNA ($89/mo), LinkedIn, BongThom | Telegram groups, Facebook comments, word of mouth |
+| **Where** | Telegram groups, Facebook comments, word of mouth |
 | **How many** | ~50,000 | **~3,000,000** |
 | **Trust** | CV verification, company branding | Anonymous usernames, "trust me bro" |
 
@@ -98,26 +98,7 @@ These are not competitors — they are proof that chat-based, vernacular-first, 
 
 ---
 
-## Slide 7 — Positioning: Not Against WorkingNA
-
-WorkingNA dominates Cambodian white-collar recruitment at $89/mo. We are not competing.
-
-| | WorkingNA | Trov |
-|---|---|---|
-| **Target** | Corporate, white-collar, degree-required | Blue-collar, SME, informal |
-| **Price** | $89/mo (employers) | Free (both sides) |
-| **Language** | English/Khmer | Khmer-first, English-second |
-| **Channel** | Web | Telegram → Messenger → PWA |
-| **Trust layer** | Company branding | Portable worker ratings |
-| **Market size** | ~50,000 jobs | ~3,000,000 workers |
-
-WorkingNA serves the structured top of the pyramid. Trov serves the base — where the volume, the need, and the Ministry's mandate all sit.
-
-**We go where they structurally cannot.**
-
----
-
-## Slide 8 — Product: Phase 0 (60 Days to Launch)
+## Slide 7 — Product: Phase 0 (60 Days to Launch)
 
 ### What ships in 60 days
 
@@ -139,7 +120,7 @@ DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pg
 
 ---
 
-## Slide 9 — What We Need From Plug and Play
+## Slide 8 — What We Need From Plug and Play
 
 ### Not money. Legitimacy, network, and the first 1,000 users.
 
@@ -153,7 +134,7 @@ DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pg
 
 ---
 
-## Slide 10 — What We Need From MoLVT / NEA
+## Slide 9 — What We Need From MoLVT / NEA
 
 ### Partnership, not funding
 
@@ -164,7 +145,7 @@ DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pg
 
 ---
 
-## Slide 11 — 18-Month Roadmap
+## Slide 10 — 18-Month Roadmap
 
 ```
 Phase 0 (Months 1-2)     Phase 1 (Months 3-12)       Phase 2 (Months 13-18)
@@ -188,7 +169,7 @@ Phase 0 (Months 1-2)     Phase 1 (Months 3-12)       Phase 2 (Months 13-18)
 
 ---
 
-## Slide 13 — Why Open Source + Non-Profit
+## Slide 11 — Why Open Source + Non-Profit
 
 ### The trust physics of recruitment
 
@@ -209,7 +190,7 @@ A VC-backed recruitment platform **cannot** make these promises. The business mo
 
 ---
 
-## Slide 14 — Ask
+## Slide 12 — Ask
 
 ### We are not asking for investment. We are asking to build something useful, together.
 

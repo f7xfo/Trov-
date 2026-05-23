@@ -43,7 +43,6 @@ Cambodia's informal job market is rife with exploitation:
 
 ### 2.3 The Structural Blind Spot of Existing Solutions
 
-WorkingNA, Cambodia's dominant recruitment platform, serves corporate/white-collar hiring at **$89/month per employer**. It is a legitimate, useful product — for the 5% of the market that can afford it and needs its features.
 
 The other 95% — blue-collar workers, micro-SMEs, restaurants, shops, cleaning services — has no tool.
 

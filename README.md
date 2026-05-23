@@ -103,7 +103,7 @@ Trov's rating system is **structured, verified, bidirectional, and immutable**:
 
 ## Positioning
 
-Trov targets the **95% of Cambodian workers** not served by corporate job boards — blue-collar, micro-SME, informal hiring. It is a **public good**, intended for non-profit housing with eventual MoLVT/NEA partnership. It does not compete with WorkingNA.
+Trov targets the **95% of Cambodian workers** not served by corporate job boards — blue-collar, micro-SME, informal hiring. It is a **public good**.
 
 ---
 
