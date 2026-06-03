@@ -24,7 +24,7 @@ Open-source, free recruitment platform for the workers who don't have LinkedIn.
 | | World A — LinkedIn Cambodia | World B — The Real Market |
 |---|---|---|
 | **Who** | White-collar, university graduates, English-speaking | Blue-collar, SME workers, informal economy |
-| **Where** | Telegram groups, Facebook comments, word of mouth |
+| **Where** | WorkingNA ($89/mo), LinkedIn, BongThom | Telegram groups, Facebook comments, word of mouth |
 | **How many** | ~50,000 | **~3,000,000** |
 | **Trust** | CV verification, company branding | Anonymous usernames, "trust me bro" |
 
@@ -98,7 +98,26 @@ These are not competitors — they are proof that chat-based, vernacular-first, 
 
 ---
 
-## Slide 7 — Product: Phase 0 (60 Days to Launch)
+## Slide 7 — Positioning: Not Against WorkingNA
+
+WorkingNA dominates Cambodian white-collar recruitment at $89/mo. We are not competing.
+
+| | WorkingNA | Trov |
+|---|---|---|
+| **Target** | Corporate, white-collar, degree-required | Blue-collar, SME, informal |
+| **Price** | $89/mo (employers) | Free (both sides) |
+| **Language** | English/Khmer | Khmer-first, English-second |
+| **Channel** | Web | Telegram → Messenger → PWA |
+| **Trust layer** | Company branding | Portable worker ratings |
+| **Market size** | ~50,000 jobs | ~3,000,000 workers |
+
+WorkingNA serves the structured top of the pyramid. Trov serves the base — where the volume, the need, and the Ministry's mandate all sit.
+
+**We go where they structurally cannot.**
+
+---
+
+## Slide 8 — Product: Phase 0 (60 Days to Launch)
 
 ### What ships in 60 days
 
@@ -110,7 +129,7 @@ These are not competitors — they are proof that chat-based, vernacular-first, 
 | Hybrid matching (filters + AI ranking) | Build |
 | **Structured rating system** | Build |
 | Saved search alerts | Build |
-
+| Kill-criteria auto-monitoring | Build |
 
 ### Stack
 DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pgvector · Redis · n8n (orchestration) · Self-hosted
@@ -120,7 +139,7 @@ DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pg
 
 ---
 
-## Slide 8 — What We Need From Plug and Play
+## Slide 9 — What We Need From Plug and Play
 
 ### Not money. Legitimacy, network, and the first 1,000 users.
 
@@ -134,7 +153,7 @@ DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pg
 
 ---
 
-## Slide 9 — What We Need From MoLVT / NEA
+## Slide 10 — What We Need From MoLVT / NEA
 
 ### Partnership, not funding
 
@@ -145,7 +164,7 @@ DeepSeek V3 (LLM) · Grammy.js (Telegram) · FastAPI (Python) · PostgreSQL + pg
 
 ---
 
-## Slide 10 — 18-Month Roadmap
+## Slide 11 — 18-Month Roadmap
 
 ```
 Phase 0 (Months 1-2)     Phase 1 (Months 3-12)       Phase 2 (Months 13-18)
@@ -154,11 +173,11 @@ Phase 0 (Months 1-2)     Phase 1 (Months 3-12)       Phase 2 (Months 13-18)
 │ CV Extraction    │    │ Cross-channel relay  │     │ Voice CV (Whisper)   │
 │ NL Search        │    │ Rating system v2     │     │ Khmer NLP fine-tune  │
 │ Rating System    │    │ Job posting flow     │     │ Local LLM (Ollama)   │
-
+│ Kill-Criteria    │    │ Self-hosting docs    │     │ Multi-country adapt. │
 └──────────────────┘    └─────────────────────┘     └──────────────────────┘
        │                          │                           │
   60-day gate               Public launch              Scale + replicate
-
+  (kill-criteria)           NEA partnership            Laos, Myanmar, Vietnam
 ```
 
 ### Metrics (18-month targets)
@@ -169,7 +188,21 @@ Phase 0 (Months 1-2)     Phase 1 (Months 3-12)       Phase 2 (Months 13-18)
 
 ---
 
-## Slide 11 — Why Open Source + Non-Profit
+## Slide 12 — Kill-Criteria: We Build It, We Test It, We Kill It If It Fails
+
+Trov is declared dead at Day 60 if **any** of these are true:
+
+| # | Criterion | Threshold | Auto-checked? |
+|---|---|---|---|
+| 1 | Candidates created a profile | < 50 | ✅ n8n daily |
+| 2 | Employers ran a repeat search | < 5 | ✅ n8n daily |
+| 3 | Khmer query parsing failure rate | > 40% | ✅ n8n daily |
+
+This is not pessimism. It is discipline. A free public good that nobody uses is not a public good — it is noise. We measure, and we kill what doesn't work.
+
+---
+
+## Slide 13 — Why Open Source + Non-Profit
 
 ### The trust physics of recruitment
 
@@ -190,7 +223,7 @@ A VC-backed recruitment platform **cannot** make these promises. The business mo
 
 ---
 
-## Slide 12 — Ask
+## Slide 14 — Ask
 
 ### We are not asking for investment. We are asking to build something useful, together.
 
@@ -201,7 +234,7 @@ Mentorship, network, visibility, and an introduction to the ecosystem that makes
 Endorsement and integration — make Trov visible to the workers who need it most.
 
 **The commitment from our side:**
-
+Open-source code. Free forever. Self-hostable. No data selling. Kill-criteria enforced. 60 days to prove it works.
 
 ---
 

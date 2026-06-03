@@ -43,6 +43,7 @@ Cambodia's informal job market is rife with exploitation:
 
 ### 2.3 The Structural Blind Spot of Existing Solutions
 
+WorkingNA, Cambodia's dominant recruitment platform, serves corporate/white-collar hiring at **$89/month per employer**. It is a legitimate, useful product — for the 5% of the market that can afford it and needs its features.
 
 The other 95% — blue-collar workers, micro-SMEs, restaurants, shops, cleaning services — has no tool.
 
@@ -134,9 +135,10 @@ A VC-backed company cannot credibly make all four promises. The business model c
 │ • Hybrid search (SQL filters + pgvector cosine similarity)              │
 │ • Rating system v1.0 (structured, immutable, interaction-verified)      │
 │ • Saved search alerts                                                   │
-
+│ • Kill-criteria auto-monitoring (n8n)                                   │
 │ • Docker Compose deployment                                             │
 ├──────────────────────────────────────────────────────────────────────────┤
+│ KILL GATE at Day 60:                                                     │
 │   ✓ ≥ 50 candidates with published profiles                             │
 │   ✓ ≥ 5 employers with repeat searches                                  │
 │   ✓ Khmer parsing error rate ≤ 40%                                      │
@@ -166,6 +168,20 @@ A VC-backed company cannot credibly make all four promises. The business model c
 │ • ≥ 10,000 profiles, ≥ 500 active employers, ≥ 5,000 verified ratings   │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 6. Kill-Criteria (RULE_27)
+
+Trov is declared dead if, 60 days after the Telegram bot goes live, **any** of the following are true:
+
+| # | Criterion | Threshold | Measurement |
+|---|---|---|---|
+| KC-1 | Fewer than 50 candidates created a published profile | < 50 | `COUNT(candidate_profiles WHERE is_published = true)` |
+| KC-2 | Fewer than 5 employers ran a repeat search | < 5 | `COUNT(DISTINCT employer_id) WHERE employer has ≥ 2 searches on different days` |
+| KC-3 | Khmer query parsing fails on more than 40% of real queries | > 40% error rate | `COUNT(role IS NULL OR location IS NULL) / COUNT(*) for queries containing Khmer script` |
+
+These are **auto-checked daily** by an n8n workflow and reported cold at Day 60. This is not pessimism — it is the discipline required to ensure that a "public good" is actually useful to the public.
 
 ---
 
@@ -228,7 +244,7 @@ These platforms validate the model: chat-based, vernacular-first, blue-collar/SM
 - **DeepSeek V3**: ~$0.10/million tokens. Cheapest production-grade LLM for bilingual (Khmer/English) NLP. Swappable to any OpenAI-compatible endpoint.
 - **PostgreSQL + pgvector**: One database, one backup. No separate vector store. pgvector handles tens of thousands of embeddings on commodity hardware.
 - **Grammy.js**: Superior conversation state management vs python-telegram-bot. Native i18n, session middleware, Redis storage.
-
+- **n8n**: Visual workflow builder. Non-engineers can inspect/modify the alert sweep and kill-criteria monitoring. Open-source, self-hosted.
 - **Monolith-first**: Phase 0 fits in one process + one DB. We split only when something breaks.
 
 ### 9.3 Cost to Operate
@@ -267,7 +283,7 @@ Fully operational at under $50/month. Free to run. Free to use.
 | **Project Lead / Architect** | Alex — technical architecture, agent design, infrastructure |
 | **Backend Developer** | Python/FastAPI, PostgreSQL, pgvector, Redis |
 | **Bot Developer** | Grammy.js/TypeScript, Telegram API, i18n |
-
+| **n8n Workflow Developer** | Alert sweep, kill-criteria monitoring, embedding sync |
 
 ### Seeking
 
