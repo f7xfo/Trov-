@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SrokWork — Agentic Recruitment Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #E8B84B;
+    --gold-light: #F5D07A;
+    --gold-dim: rgba(232,184,75,0.15);
+    --dark: #0D0F14;
+    --dark-2: #13161D;
+    --dark-3: #1A1E28;
+    --dark-4: #222738;
+    --dark-5: #2C3247;
+    --text: #F0EDE6;
+    --text-muted: #8A8FA3;
+    --text-dim: #5A6080;
+    --green: #2DD4A0;
+    --green-dim: rgba(45,212,160,0.12);
+    --red: #FF6B6B;
+    --blue: #4B9EFF;
+    --blue-dim: rgba(75,158,255,0.12);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', 'Kantumruy Pro', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  .app-shell {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 280px;
+    background: var(--dark-2);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--text);
+  }
+
+  .logo-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .nav-section {
+    padding: 16px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-label {
+    font-size: 9px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0 12px;
+    margin-bottom: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .nav-item:hover { background: var(--dark-3); color: var(--text); }
+  .nav-item.active {
+    background: var(--gold-dim);
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--dark-3);
+    cursor: pointer;
+  }
+
+  .user-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    flex-shrink: 0;
+  }
+
+  .user-name { font-size: 13px; font-weight: 500; }
+  .user-tier {
+    font-size: 10px;
+    color: var(--gold);
+    margin-top: 1px;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 60px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+
+  .topbar-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .topbar-actions { display: flex; gap: 8px; }
+
+  .btn-icon {
+    width: 34px; height: 34px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .btn-icon:hover { background: var(--dark-3); color: var(--text); }
+
+  .lang-toggle {
+    display: flex;
+    background: var(--dark-3);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+    gap: 2px;
+  }
+
+  .lang-btn {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-muted);
+    border: none;
+    background: transparent;
+  }
+  .lang-btn.active { background: var(--gold); color: var(--dark); }
+
+  /* ── CONTENT ── */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+  }
+
+  .content::-webkit-scrollbar { width: 4px; }
+  .content::-webkit-scrollbar-track { background: transparent; }
+  .content::-webkit-scrollbar-thumb { background: var(--dark-5); border-radius: 2px; }
+
+  /* ── SCREEN SYSTEM ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── SEARCH HERO ── */
+  .search-hero {
+    background: linear-gradient(135deg, var(--dark-3) 0%, var(--dark-2) 100%);
+    border: 1px solid rgba(232,184,75,0.15);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .search-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(232,184,75,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .hero-title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 6px;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .hero-title-km {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-family: 'Kantumruy Pro', sans-serif;
+  }
+
+  .search-bar {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .search-input-wrap {
+    flex: 1;
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: 16px;
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--dark);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 14px 16px 14px 44px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--gold); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  .search-btn {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: var(--radius);
+    padding: 0 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+
+  .search-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .search-examples {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .example-chip {
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .example-chip:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .stat-value.gold { color: var(--gold); }
+  .stat-value.green { color: var(--green); }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* ── ALERTS SECTION ── */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .section-action {
+    font-size: 12px;
+    color: var(--gold);
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .alerts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .alert-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .alert-card:hover { border-color: rgba(232,184,75,0.3); }
+
+  .alert-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-top: 4px;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px var(--green);
+  }
+
+  .alert-query { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .alert-meta { font-size: 11px; color: var(--text-muted); }
+
+  .alert-count {
+    margin-left: auto;
+    font-size: 11px;
+    background: var(--green-dim);
+    color: var(--green);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  /* ── RESULTS ── */
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .results-query {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    flex: 1;
+  }
+
+  .results-count {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  .results-actions { display: flex; gap: 8px; }
+
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 7px 14px;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .btn-primary {
+    background: var(--gold);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 7px 16px;
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .sort-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .sort-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-muted);
+    transition: all 0.15s;
+    background: transparent;
+    font-family: inherit;
+  }
+  .sort-chip.active {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .candidate-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .candidate-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .candidate-card:hover {
+    border-color: rgba(232,184,75,0.25);
+    background: var(--dark-3);
+    transform: translateY(-1px);
+  }
+
+  .rank-badge {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  .candidate-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dark-5), var(--dark-4));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.06);
+  }
+
+  .candidate-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .candidate-name span { font-family: 'Kantumruy Pro', sans-serif; font-weight: 400; font-size: 12px; color: var(--text-muted); margin-left: 6px; }
+
+  .candidate-meta {
+    display: flex;
+    gap: 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 6px 0;
+    flex-wrap: wrap;
+  }
+
+  .meta-item { display: flex; align-items: center; gap: 4px; }
+
+  .avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .avail-now {
+    background: var(--green-dim);
+    color: var(--green);
+  }
+
+  .avail-soon {
+    background: rgba(232,184,75,0.1);
+    color: var(--gold);
+  }
+
+  .candidate-skills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .skill-tag {
+    background: var(--dark-4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .rating-star {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .card-actions {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .action-btn {
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .action-btn.primary {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+  }
+
+  .action-btn.secondary {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    color: var(--text-muted);
+  }
+
+  .action-btn.primary:hover { background: var(--gold-light); }
+  .action-btn.secondary:hover { border-color: var(--text-muted); color: var(--text); }
+
+  /* ── PROFILE SCREEN ── */
+  .profile-hero {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .profile-avatar-lg {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dark-5), var(--dark-4));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+    border: 3px solid rgba(232,184,75,0.2);
+  }
+
+  .profile-name-lg {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+
+  .profile-name-km {
+    font-size: 16px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .profile-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .profile-tag {
+    background: var(--dark-4);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .profile-actions-row {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-message {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-rate {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    color: var(--text-muted);
+    border-radius: var(--radius);
+    padding: 9px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .info-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .info-card-title {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+  }
+
+  .info-row:last-child { border-bottom: none; }
+  .info-key { color: var(--text-muted); }
+  .info-val { font-weight: 500; }
+  .info-val.highlight { color: var(--green); }
+  .info-val.gold { color: var(--gold); }
+
+  .reviews-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .review-item {
+    background: var(--dark-3);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+
+  .review-stars { color: var(--gold); font-size: 12px; margin-bottom: 4px; }
+  .review-text { font-size: 13px; color: var(--text-muted); font-style: italic; }
+  .review-author { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ── BOT SCREEN ── */
+  .bot-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .bot-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bot-card::after {
+    content: attr(data-icon);
+    position: absolute;
+    right: 20px; bottom: 16px;
+    font-size: 40px;
+    opacity: 0.15;
+  }
+
+  .bot-card-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .bot-card-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .bot-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .bot-status.live { color: var(--green); }
+  .bot-status.live::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 5px var(--green);
+  }
+
+  .chat-demo {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .chat-demo-title {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  .chat-messages { display: flex; flex-direction: column; gap: 8px; }
+
+  .msg {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .msg.bot {
+    background: var(--dark-4);
+    align-self: flex-start;
+    border-radius: 4px 12px 12px 12px;
+    color: var(--text);
+  }
+
+  .msg.user {
+    background: var(--gold);
+    color: var(--dark);
+    align-self: flex-end;
+    border-radius: 12px 4px 12px 12px;
+    font-weight: 500;
+  }
+
+  .msg-km {
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-size: 12px;
+  }
+
+  /* ── ANALYTICS ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+
+  .kpi-icon {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text);
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .kpi-trend {
+    font-size: 11px;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  .kpi-trend.up { color: var(--green); }
+  .kpi-trend.down { color: var(--red); }
+
+  .bar-chart {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .bar-chart-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .bars {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    height: 100px;
+  }
+
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+  .bar-fill {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s;
+  }
+
+  .bar-label { font-size: 10px; color: var(--text-muted); }
+
+  /* ── MOBILE HINT ── */
+  .mobile-frames {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .phone-frame {
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .phone-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .qr-mock {
+    width: 64px; height: 64px;
+    background: var(--dark-3);
+    border-radius: 8px;
+    margin: 0 auto 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+
+  .channel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .channel-tg { background: rgba(41,182,246,0.12); color: #29B6F6; }
+  .channel-ms { background: rgba(79,138,243,0.12); color: #4F8AF3; }
+  .channel-pwa { background: var(--gold-dim); color: var(--gold); }
+
+  /* ── ROADMAP ── */
+  .timeline { position: relative; padding-left: 30px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), var(--dark-5));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--dark);
+    box-shadow: 0 0 6px rgba(232,184,75,0.5);
+  }
+
+  .timeline-dot.done { background: var(--green); box-shadow: 0 0 6px rgba(45,212,160,0.5); }
+  .timeline-dot.future { background: var(--dark-5); box-shadow: none; border-color: var(--dark-5); }
+
+  .timeline-period {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .timeline-items {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── BOTTOM MOBILE BAR ── */
+  .mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 64px;
+    background: var(--dark-2);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    z-index: 100;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  .mob-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 10px;
+    transition: color 0.15s;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+
+  .mob-btn .icon { font-size: 18px; }
+  .mob-btn.active { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .profile-grid { grid-template-columns: 1fr; }
+    .mobile-frames { grid-template-columns: 1fr 1fr; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .bot-header { grid-template-columns: 1fr; }
+    .alerts-grid { grid-template-columns: 1fr; }
+    .mobile-bar { display: flex; }
+    .content { padding-bottom: 80px; }
+    .profile-hero { flex-direction: column; }
+    .profile-actions-row { flex-direction: row; margin-left: 0; }
+    .card-actions { flex-direction: row; margin-left: 0; width: 100%; margin-top: 12px; }
+    .candidate-card { flex-wrap: wrap; }
+  }
+
+  @media (max-width: 600px) {
+    .content { padding: 16px; }
+    .topbar { padding: 0 16px; }
+    .search-hero { padding: 20px; }
+    .hero-title { font-size: 20px; }
+    .search-bar { flex-direction: column; }
+    .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .kpi-grid { grid-template-columns: 1fr; }
+    .mobile-frames { grid-template-columns: 1fr; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .screen.active > * {
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .screen.active > *:nth-child(2) { animation-delay: 0.05s; }
+  .screen.active > *:nth-child(3) { animation-delay: 0.1s; }
+  .screen.active > *:nth-child(4) { animation-delay: 0.15s; }
+
+  /* ── NOTIFICATION TOAST ── */
+  .toast {
+    position: fixed;
+    top: 20px; right: 20px;
+    background: var(--dark-3);
+    border: 1px solid rgba(45,212,160,0.3);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 13px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    transform: translateX(120%);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 300px;
+  }
+
+  .toast.show { transform: translateX(0); }
+  .toast-icon { font-size: 18px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <div class="logo-icon">🇰🇭</div>
+        <div>
+          <div class="logo-text">SrokWork</div>
+          <div class="logo-sub">Recruitment Platform</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Employer</div>
+      <div class="nav-item active" onclick="showScreen('search')">
+        <span class="nav-icon">🔍</span> Search Candidates
+      </div>
+      <div class="nav-item" onclick="showScreen('alerts')">
+        <span class="nav-icon">🔔</span> My Alerts
+        <span class="nav-badge">2</span>
+      </div>
+      <div class="nav-item" onclick="showScreen('messages')">
+        <span class="nav-icon">💬</span> Messages
+        <span class="nav-badge">3</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Platform</div>
+      <div class="nav-item" onclick="showScreen('bots')">
+        <span class="nav-icon">🤖</span> Bot Channels
+      </div>
+      <div class="nav-item" onclick="showScreen('analytics')">
+        <span class="nav-icon">📊</span> Analytics
+      </div>
+      <div class="nav-item" onclick="showScreen('roadmap')">
+        <span class="nav-icon">🗺️</span> Roadmap
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Candidate</div>
+      <div class="nav-item" onclick="showScreen('submit')">
+        <span class="nav-icon">📄</span> Submit CV
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">AK</div>
+        <div>
+          <div class="user-name">Alex K.</div>
+          <div class="user-tier">⭐ Founding Member</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Search Candidates</div>
+      <div class="topbar-actions">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang('EN')">EN</button>
+          <button class="lang-btn" onclick="setLang('KM')">ខ្មែរ</button>
+        </div>
+        <button class="btn-icon" title="Notifications" onclick="showToast()">🔔</button>
+        <button class="btn-icon" title="Settings">⚙️</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ── SCREEN: SEARCH ── -->
+      <div class="screen active" id="screen-search">
+        <div class="search-hero">
+          <div class="hero-eyebrow">AI-Powered Natural Language Search</div>
+          <div class="hero-title">Find the perfect candidate —<br>describe them in your own words</div>
+          <div class="hero-title-km">ស្វែងរកបុគ្គលិក ដោយប្រើភាសារបស់អ្នក</div>
+          <div class="search-bar">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" id="search-field" type="text" placeholder='e.g. "cook Siem Reap under $400" or "ខ្ញុំត្រូវការអ្នកលក់ BKK1"'>
+            </div>
+            <button class="search-btn" onclick="runSearch()">Search →</button>
+          </div>
+          <div class="search-examples">
+            <div class="example-chip" onclick="fillSearch('Cook, Siem Reap, under $400')">Cook · Siem Reap · &lt;$400</div>
+            <div class="example-chip" onclick="fillSearch('Receptionist hotel BKK1, English fluent')">Receptionist · BKK1 · English</div>
+            <div class="example-chip" onclick="fillSearch('Security guard Phnom Penh, Chinese speaker')">Security · Chinese · PP</div>
+            <div class="example-chip" onclick="fillSearch('Driver Kampot, motorbike license')">Driver · Kampot</div>
+            <div class="example-chip" onclick="fillSearch('ការ​ជួយ​ការ​ងារ​គ្រួ​សារ​នៅ​ភ្នំ​ពេញ $200')">ការ​ជួយ​ការ​ងារ​ (Khmer query)</div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-value gold">1,247</div>
+            <div class="stat-label">Active Profiles</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value green">89</div>
+            <div class="stat-label">Available Now</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">234</div>
+            <div class="stat-label">Employers Using Platform</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">412</div>
+            <div class="stat-label">Successful Hires</div>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <div class="section-title">🔔 Your Active Alerts</div>
+          <div class="section-action" onclick="showScreen('alerts')">View all →</div>
+        </div>
+        <div class="alerts-grid">
+          <div class="alert-card">
+            <div class="alert-dot"></div>
+            <div>
+              <div class="alert-query">Cook · Siem Reap · &lt;$400</div>
+              <div class="alert-meta">Saved 3 days ago · 12 total matches</div>
+            </div>
+            <div class="alert-count">+2 new</div>
+          </div>
+          <div class="alert-card">
+            <div class="alert-dot"></div>
+            <div>
+              <div class="alert-query">Receptionist · BKK1 · English</div>
+              <div class="alert-meta">Saved 1 week ago · 8 total matches</div>
+            </div>
+            <div class="alert-count">+1 new</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: RESULTS ── -->
+      <div class="screen" id="screen-results">
+        <div class="results-header">
+          <div>
+            <div class="results-query" id="results-title">Results</div>
+            <div class="results-count" id="results-subtitle">12 candidates found</div>
+          </div>
+          <div class="results-actions">
+            <button class="btn-outline" onclick="showScreen('search')">← Back</button>
+            <button class="btn-primary" onclick="saveAlert()">💾 Save Alert</button>
+          </div>
+        </div>
+
+        <div class="sort-row">
+          <button class="sort-chip active">Best Match</button>
+          <button class="sort-chip">Available Now</button>
+          <button class="sort-chip">Highest Rated</button>
+          <button class="sort-chip">Salary: Low</button>
+        </div>
+
+        <div class="candidate-list">
+          <div class="candidate-card" onclick="showScreen('profile')">
+            <div class="rank-badge">#1 MATCH</div>
+            <div class="candidate-avatar">👨‍🍳</div>
+            <div style="flex:1">
+              <div class="candidate-name">ចន្ទ័រ វិចិត្រ <span>Chan Vichea</span> <span class="rating-star">★ 4.8</span></div>
+              <div class="candidate-meta">
+                <span class="meta-item">📍 Siem Reap</span>
+                <span class="meta-item">💰 $300–400/mo</span>
+                <span class="avail-badge avail-now">● Available now</span>
+              </div>
+              <div class="candidate-skills">
+                <span class="skill-tag">Cook</span>
+                <span class="skill-tag">Kitchen Mgmt</span>
+                <span class="skill-tag">Khmer</span>
+                <span class="skill-tag">English (B1)</span>
+                <span class="skill-tag">4 yrs exp</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="action-btn primary">View</button>
+              <button class="action-btn secondary">💬 Message</button>
+            </div>
+          </div>
+
+          <div class="candidate-card">
+            <div class="rank-badge">#2</div>
+            <div class="candidate-avatar">👩‍🍳</div>
+            <div style="flex:1">
+              <div class="candidate-name">Srey Mom <span class="rating-star">★ 4.5</span></div>
+              <div class="candidate-meta">
+                <span class="meta-item">📍 Siem Reap</span>
+                <span class="meta-item">💰 $280–350/mo</span>
+                <span class="avail-badge avail-soon">◐ Jan 15</span>
+              </div>
+              <div class="candidate-skills">
+                <span class="skill-tag">Cook</span>
+                <span class="skill-tag">Pastry</span>
+                <span class="skill-tag">Khmer</span>
+                <span class="skill-tag">2 yrs exp</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="action-btn primary">View</button>
+              <button class="action-btn secondary">💬 Message</button>
+            </div>
+          </div>
+
+          <div class="candidate-card">
+            <div class="rank-badge">#3</div>
+            <div class="candidate-avatar">🧑‍🍳</div>
+            <div style="flex:1">
+              <div class="candidate-name">លី ម៉េងហ័រ <span>Ly Menghor</span> <span class="rating-star">★ 4.2</span></div>
+              <div class="candidate-meta">
+                <span class="meta-item">📍 Siem Reap</span>
+                <span class="meta-item">💰 $320–400/mo</span>
+                <span class="avail-badge avail-now">● Available now</span>
+              </div>
+              <div class="candidate-skills">
+                <span class="skill-tag">Cook</span>
+                <span class="skill-tag">Asian Cuisine</span>
+                <span class="skill-tag">Khmer</span>
+                <span class="skill-tag">Chinese (basic)</span>
+                <span class="skill-tag">3 yrs exp</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="action-btn primary">View</button>
+              <button class="action-btn secondary">💬 Message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: PROFILE ── -->
+      <div class="screen" id="screen-profile">
+        <div style="display:flex; gap:12px; margin-bottom:20px; align-items:center">
+          <button class="btn-outline" onclick="showScreen('results')">← Results</button>
+          <span style="font-size:12px;color:var(--text-muted)">#1 Best Match</span>
+        </div>
+        <div class="profile-hero">
+          <div class="profile-avatar-lg">👨‍🍳</div>
+          <div style="flex:1">
+            <div class="profile-name-lg">ចន្ទ័រ វិចិត្រ</div>
+            <div class="profile-name-km">Chan Vichea</div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <span class="rating-star" style="font-size:15px">★ 4.8</span>
+              <span style="font-size:12px;color:var(--text-muted)">(12 ratings)</span>
+              <span class="avail-badge avail-now">● Available immediately</span>
+            </div>
+            <div class="profile-tags">
+              <span class="profile-tag">📍 Siem Reap</span>
+              <span class="profile-tag">💰 $300–400/mo</span>
+              <span class="profile-tag">👔 Full-time</span>
+              <span class="profile-tag">🏨 Hospitality</span>
+            </div>
+          </div>
+          <div class="profile-actions-row">
+            <button class="btn-message">💬 Send Message</button>
+            <button class="btn-rate">⭐ Rate</button>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <div class="info-card">
+            <div class="info-card-title">Work Details</div>
+            <div class="info-row"><span class="info-key">Experience</span><span class="info-val">4 years</span></div>
+            <div class="info-row"><span class="info-key">Main Skill</span><span class="info-val">Cook</span></div>
+            <div class="info-row"><span class="info-key">Education</span><span class="info-val">High School</span></div>
+            <div class="info-row"><span class="info-key">Availability</span><span class="info-val highlight">Immediately</span></div>
+            <div class="info-row"><span class="info-key">Salary</span><span class="info-val gold">$300–400/mo</span></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-title">Languages & Skills</div>
+            <div class="info-row"><span class="info-key">Khmer</span><span class="info-val highlight">Native</span></div>
+            <div class="info-row"><span class="info-key">English</span><span class="info-val">B1 — Intermediate</span></div>
+            <div class="info-row"><span class="info-key">Kitchen Skills</span><span class="info-val">Management</span></div>
+            <div class="info-row"><span class="info-key">Cuisines</span><span class="info-val">Khmer, Asian</span></div>
+            <div class="info-row"><span class="info-key">Profile Score</span><span class="info-val gold">87% complete</span></div>
+          </div>
+        </div>
+
+        <div class="info-card" style="margin-bottom:16px">
+          <div class="info-card-title">Experience History</div>
+          <div class="info-row"><span class="info-key">2022–2024</span><span class="info-val">Angkor Village Resort</span></div>
+          <div class="info-row"><span class="info-key">2020–2022</span><span class="info-val">La Résidence d'Angkor</span></div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Employer Reviews</div>
+          <div class="reviews-list">
+            <div class="review-item">
+              <div class="review-stars">★★★★★</div>
+              <div class="review-text">"Very reliable, hardworking. Always on time. Would hire again."</div>
+              <div class="review-author">— Angkor Village Resort, 2024</div>
+            </div>
+            <div class="review-item">
+              <div class="review-stars">★★★★☆</div>
+              <div class="review-text">"Good attitude, keeps kitchen clean and organized."</div>
+              <div class="review-author">— La Résidence d'Angkor, 2022</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: BOTS ── -->
+      <div class="screen" id="screen-bots">
+        <div class="bot-header">
+          <div class="bot-card" data-icon="✈️">
+            <div class="bot-card-name">Telegram Bot</div>
+            <div class="bot-card-desc">@TrovBot — Zero-install. Candidates submit CVs in 3 minutes. Employers search in natural language.</div>
+            <div class="bot-status live">Live · 847 users</div>
+          </div>
+          <div class="bot-card" data-icon="💬">
+            <div class="bot-card-name">Messenger Bot</div>
+            <div class="bot-card-desc">Facebook Messenger — Provincial reach. Bilingual Khmer/English. Same flows, simpler UI.</div>
+            <div class="bot-status live">Live · 423 users</div>
+          </div>
+        </div>
+
+        <div class="chat-demo">
+          <div class="chat-demo-title">📱 Telegram — Employer Search Demo</div>
+          <div class="chat-messages">
+            <div class="msg bot">🙏 Welcome to <strong>SrokWork!</strong><br>Type what you're looking for:<br><span style="color:var(--text-muted);font-size:12px">e.g. "I need a cook in Siem Reap under $400"</span></div>
+            <div class="msg user msg-km">ខ្ញុំត្រូវការអ្នកធ្វើម្ហូបនៅសៀមរាប ទទួលបាន $400</div>
+            <div class="msg bot">🔍 Searching...<br><br>Found <strong>cook · Siem Reap · &lt;$400</strong><br><br>━━━━━━━━━━━━<br>👤 <strong>ចន្ទ័រ វ.</strong> ⭐4.8<br>📍 Siem Reap · 💰$300–400 · ✅ Now<br>[View] [💬 Message]<br>━━━━━━━━━━━━<br>👤 <strong>Srey Mom</strong> ⭐4.5<br>📍 Siem Reap · 💰$280–350 · 📅 Jan 15<br>[View] [💬 Message]</div>
+            <div class="msg user">Save as alert</div>
+            <div class="msg bot">✅ Alert saved! You have <strong>2/3 alerts</strong> (free tier).<br>I'll notify you instantly when new matches appear. 🔔</div>
+          </div>
+        </div>
+
+        <div class="chat-demo">
+          <div class="chat-demo-title">📱 Telegram — Candidate CV Flow</div>
+          <div class="chat-messages">
+            <div class="msg user">/start</div>
+            <div class="msg bot">🙏 Welcome! Are you:<br>[🔍 Looking for work] [👔 Hiring]</div>
+            <div class="msg user">Looking for work</div>
+            <div class="msg bot">Great! Upload your CV (PDF/image) or just tell me about yourself:</div>
+            <div class="msg user msg-km">ខ្ញុំជំនាញ cook 4 ឆ្នាំ នៅ Siem Reap ចង់បាន $300-400</div>
+            <div class="msg bot">⚙️ Building your profile...<br><br>✅ <strong>Profile created!</strong><br>• Cook · 4 years<br>• Siem Reap<br>• $300–400/month<br><br>[✏️ Edit] [✅ Go Live]</div>
+          </div>
+        </div>
+
+        <div class="mobile-frames">
+          <div class="phone-frame">
+            <div class="phone-label">Telegram</div>
+            <div class="qr-mock">✈️</div>
+            <div class="channel-badge channel-tg">@TrovBot</div>
+          </div>
+          <div class="phone-frame">
+            <div class="phone-label">Messenger</div>
+            <div class="qr-mock">💬</div>
+            <div class="channel-badge channel-ms">fb.me/SrokWork</div>
+          </div>
+          <div class="phone-frame">
+            <div class="phone-label">PWA (Install)</div>
+            <div class="qr-mock">🌐</div>
+            <div class="channel-badge channel-pwa">trov.com</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: ANALYTICS ── -->
+      <div class="screen" id="screen-analytics">
+        <div style="font-size:18px;font-weight:700;margin-bottom:20px">Platform Analytics <span style="font-size:12px;color:var(--text-muted);font-weight:400">Month 14</span></div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon">👤</div>
+            <div class="kpi-value">1,247</div>
+            <div class="kpi-label">Active Profiles</div>
+            <div class="kpi-trend up">↑ +14% vs last month</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">🏢</div>
+            <div class="kpi-value">234</div>
+            <div class="kpi-label">Active Employers</div>
+            <div class="kpi-trend up">↑ +22% vs last month</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">🔔</div>
+            <div class="kpi-value">67</div>
+            <div class="kpi-label">Saved Alerts</div>
+            <div class="kpi-trend up">↑ +8 this month</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">🤝</div>
+            <div class="kpi-value">412</div>
+            <div class="kpi-label">Confirmed Hires</div>
+            <div class="kpi-trend up">↑ +38 this month</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">🔍</div>
+            <div class="kpi-value">2,841</div>
+            <div class="kpi-label">Monthly Searches</div>
+            <div class="kpi-trend up">↑ +31%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon">⭐</div>
+            <div class="kpi-value">4.6</div>
+            <div class="kpi-label">Avg. Employer NPS Score</div>
+            <div class="kpi-trend up">↑ from 4.3</div>
+          </div>
+        </div>
+
+        <div class="bar-chart">
+          <div class="bar-chart-title">Candidate Profiles Growth</div>
+          <div class="bars">
+            <div class="bar-col">
+              <div class="bar-fill" style="height:18px;background:var(--gold);opacity:0.3"></div>
+              <div class="bar-label">M1</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:28px;background:var(--gold);opacity:0.35"></div>
+              <div class="bar-label">M2</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:38px;background:var(--gold);opacity:0.4"></div>
+              <div class="bar-label">M3</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:48px;background:var(--gold);opacity:0.45"></div>
+              <div class="bar-label">M4</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:55px;background:var(--gold);opacity:0.5"></div>
+              <div class="bar-label">M5</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:63px;background:var(--gold);opacity:0.55"></div>
+              <div class="bar-label">M6</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:70px;background:var(--gold);opacity:0.6"></div>
+              <div class="bar-label">M7</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:78px;background:var(--gold);opacity:0.65"></div>
+              <div class="bar-label">M8</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:84px;background:var(--gold);opacity:0.75"></div>
+              <div class="bar-label">M9</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:88px;background:var(--gold);opacity:0.85"></div>
+              <div class="bar-label">M10</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:94px;background:var(--gold);opacity:0.9"></div>
+              <div class="bar-label">M11</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height:100px;background:var(--gold)"></div>
+              <div class="bar-label">M12</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-row" style="margin-bottom:0">
+          <div class="stat-card">
+            <div class="stat-value" style="font-size:16px">🎯 TRANSITION</div>
+            <div class="stat-label">READY in ~4 months</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value green">$0</div>
+            <div class="stat-label">Current MRR (free phase)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value gold">$1,596</div>
+            <div class="stat-label">Projected MRR at M18</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">$65</div>
+            <div class="stat-label">Monthly Infra Cost</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: ROADMAP ── -->
+      <div class="screen" id="screen-roadmap">
+        <div style="font-size:18px;font-weight:700;margin-bottom:24px">18-Month Roadmap</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot done"></div>
+            <div class="timeline-period">Month 1–2 · Foundation</div>
+            <div class="timeline-title">MVP Launch</div>
+            <div class="timeline-items">✅ Next.js PWA + Telegram bot · ✅ CV parsing with GPT-4o-mini · ✅ pgvector semantic search · ✅ Company registered · ✅ First 50 candidates</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot done"></div>
+            <div class="timeline-period">Month 3–4 · Messenger + Messaging</div>
+            <div class="timeline-title">Multi-Channel</div>
+            <div class="timeline-items">✅ Messenger bot live · ✅ Cross-channel private messaging · ✅ Rating system (both directions) · ✅ Alert notifications</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">Month 5–6 · Trust Layer</div>
+            <div class="timeline-title">Quality & Verification</div>
+            <div class="timeline-items">→ Verified employer badges · → LPDP compliance audit · → Admin moderation dashboard · → 400+ candidate profiles</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot future"></div>
+            <div class="timeline-period">Month 7–9 · Scale</div>
+            <div class="timeline-title">Provincial Expansion</div>
+            <div class="timeline-items">→ Siem Reap campus ambassadors · → SEO / Google Ads · → Khmer NLP fine-tuning · → 600+ candidates</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot future"></div>
+            <div class="timeline-period">Month 10–12 · Pre-Monetization</div>
+            <div class="timeline-title">Payment Infrastructure</div>
+            <div class="timeline-items">→ ABA Pay + Stripe integration · → Founding Member program · → Featured listings ($9/post) · → 800+ candidates · 180+ employers</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot future"></div>
+            <div class="timeline-period">Month 13–15 · Critical Mass</div>
+            <div class="timeline-title">Trigger Monitoring</div>
+            <div class="timeline-items">→ Daily KPI monitoring → trigger: 1,000 candidates + 200 employers + 50 alerts → Founding member registration campaign</div>
+          </div>
+          <div class="timeline-item" style="margin-bottom:0">
+            <div class="timeline-dot future"></div>
+            <div class="timeline-period">Month 16–18 · Monetization</div>
+            <div class="timeline-title">🚀 Paid Tiers Launch</div>
+            <div class="timeline-items">→ $29 Starter + $59 Pro · → Grandfathering activated · → Target: 30+ paying employers · → MRR >$1,500 · → Demo Day</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: SUBMIT CV ── -->
+      <div class="screen" id="screen-submit">
+        <div style="font-size:18px;font-weight:700;margin-bottom:6px">Submit Your CV</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:24px">Create your profile · Be found by employers · Always free</div>
+
+        <div class="search-hero" style="margin-bottom:20px">
+          <div class="hero-eyebrow">Step 1 of 2</div>
+          <div class="hero-title" style="font-size:18px;margin-bottom:8px">Upload your CV (optional)</div>
+          <div style="background:var(--dark);border:2px dashed rgba(232,184,75,0.3);border-radius:var(--radius);padding:32px;text-align:center;cursor:pointer;transition:border-color 0.2s" onmouseenter="this.style.borderColor='rgba(232,184,75,0.7)'" onmouseleave="this.style.borderColor='rgba(232,184,75,0.3)'">
+            <div style="font-size:32px;margin-bottom:8px">📎</div>
+            <div style="font-size:14px;color:var(--text-muted)">Drop your CV here or <span style="color:var(--gold);cursor:pointer">browse</span></div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:4px">PDF, Word, JPG accepted · AI will extract your info automatically</div>
+          </div>
+          <div style="text-align:center;margin:16px 0;font-size:12px;color:var(--text-dim)">— OR fill in manually —</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">Full Name / ឈ្មោះ</div>
+              <input class="search-input" style="padding:10px 14px" placeholder="Your name...">
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">City / ទីក្រុង</div>
+              <input class="search-input" style="padding:10px 14px" placeholder="Phnom Penh...">
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">Skills / ជំនាញ</div>
+              <input class="search-input" style="padding:10px 14px" placeholder="Cook, English, Driver...">
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">Salary / ប្រាក់ខែ (USD)</div>
+              <input class="search-input" style="padding:10px 14px" placeholder="$250 to $400">
+            </div>
+          </div>
+          <button class="search-btn" style="width:100%;margin-top:16px;padding:14px">🚀 Create My Profile — ចុះឈ្មោះ</button>
+        </div>
+
+        <div style="background:var(--dark-2);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);padding:20px">
+          <div style="font-size:12px;font-weight:600;margin-bottom:12px;color:var(--text-muted)">ALSO AVAILABLE ON</div>
+          <div style="display:flex;gap:12px">
+            <div class="channel-badge channel-tg" style="padding:8px 16px;font-size:13px">✈️ Telegram @TrovBot</div>
+            <div class="channel-badge channel-ms" style="padding:8px 16px;font-size:13px">💬 Messenger SrokWork</div>
+          </div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:10px">Submit your CV directly from Telegram or Messenger — no account needed.</div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: ALERTS ── -->
+      <div class="screen" id="screen-alerts">
+        <div style="font-size:18px;font-weight:700;margin-bottom:20px">My Saved Alerts <span style="font-size:12px;color:var(--text-muted);font-weight:400">2/3 used (free tier)</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="candidate-card" style="cursor:default">
+            <div style="font-size:24px">🔔</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:600;margin-bottom:4px">Cook · Siem Reap · &lt;$400</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Saved 3 days ago · Notified via Telegram</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <span class="skill-tag">12 total matches</span>
+                <span class="skill-tag green" style="background:var(--green-dim);border-color:rgba(45,212,160,0.2);color:var(--green)">+2 new this week</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="action-btn primary" onclick="fillSearch('Cook, Siem Reap, under $400');showScreen('results')">View Matches</button>
+              <button class="action-btn secondary">⏸ Pause</button>
+            </div>
+          </div>
+          <div class="candidate-card" style="cursor:default">
+            <div style="font-size:24px">🔔</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:600;margin-bottom:4px">Receptionist · BKK1 · English fluent</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Saved 1 week ago · Notified via PWA push</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <span class="skill-tag">8 total matches</span>
+                <span class="skill-tag green" style="background:var(--green-dim);border-color:rgba(45,212,160,0.2);color:var(--green)">+1 new this week</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="action-btn primary" onclick="fillSearch('Receptionist BKK1 English');showScreen('results')">View Matches</button>
+              <button class="action-btn secondary">⏸ Pause</button>
+            </div>
+          </div>
+          <div class="alert-card" style="border:2px dashed rgba(255,255,255,0.1);cursor:pointer" onclick="showScreen('search')">
+            <div style="font-size:20px">＋</div>
+            <div>
+              <div style="font-size:13px;font-weight:500">Add new alert</div>
+              <div style="font-size:11px;color:var(--text-muted)">1 slot remaining on free tier · Upgrade for unlimited</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SCREEN: MESSAGES ── -->
+      <div class="screen" id="screen-messages">
+        <div style="font-size:18px;font-weight:700;margin-bottom:20px">Messages <span style="font-size:12px;color:var(--text-muted);font-weight:400">Private · No phone sharing</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="candidate-card" style="cursor:pointer">
+            <div class="candidate-avatar">👨‍🍳</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:600">ចន្ទ័រ វិចិត្រ</div>
+              <div style="font-size:12px;color:var(--text-muted)">Are you still hiring? I'm very interested in the cook position...</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--text-dim)">2h ago</div>
+              <div style="background:var(--gold);color:var(--dark);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-left:auto;margin-top:4px">1</div>
+            </div>
+          </div>
+          <div class="candidate-card" style="cursor:pointer;opacity:0.7">
+            <div class="candidate-avatar">👩‍🍳</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:600">Srey Mom</div>
+              <div style="font-size:12px;color:var(--text-muted)">Thank you for your message! I'd love to discuss further...</div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim)">1d ago</div>
+          </div>
+          <div class="candidate-card" style="cursor:pointer;opacity:0.6">
+            <div class="candidate-avatar">🧑‍🍳</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:600">លី ម៉េងហ័រ</div>
+              <div style="font-size:12px;color:var(--text-muted)">ខ្ញុំចង់ដឹងអំពីពេលវេលា...</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:11px;color:var(--text-dim)">3d ago</div>
+              <div style="background:var(--gold);color:var(--dark);font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-left:auto;margin-top:4px">2</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;font-size:12px;color:var(--text-dim);text-align:center;padding:12px">
+          🔒 Conversations are private. Phone numbers are never shared between parties.
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app-shell -->
+
+<!-- MOBILE BOTTOM BAR -->
+<div class="mobile-bar" id="mobile-bar">
+  <button class="mob-btn active" id="mob-search" onclick="showScreen('search')">
+    <span class="icon">🔍</span>Search
+  </button>
+  <button class="mob-btn" id="mob-alerts" onclick="showScreen('alerts')">
+    <span class="icon">🔔</span>Alerts
+  </button>
+  <button class="mob-btn" id="mob-bots" onclick="showScreen('bots')">
+    <span class="icon">🤖</span>Bots
+  </button>
+  <button class="mob-btn" id="mob-messages" onclick="showScreen('messages')">
+    <span class="icon">💬</span>Chat
+  </button>
+  <button class="mob-btn" id="mob-submit" onclick="showScreen('submit')">
+    <span class="icon">📄</span>CV
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">🔔</span>
+  <div>
+    <div style="font-weight:600;font-size:13px">New Match Alert!</div>
+    <div style="font-size:12px;color:var(--text-muted)">Cook · Siem Reap · Available now → ⭐4.9</div>
+  </div>
+</div>
+
+<script>
+const screens = {
+  'search': 'Search Candidates',
+  'results': 'Search Results',
+  'profile': 'Candidate Profile',
+  'bots': 'Bot Channels',
+  'analytics': 'Analytics Dashboard',
+  'roadmap': '18-Month Roadmap',
+  'submit': 'Submit Your CV',
+  'alerts': 'My Alerts',
+  'messages': 'Messages'
+};
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name)?.classList.add('active');
+  document.getElementById('topbar-title').textContent = screens[name] || name;
+
+  // Sidebar nav
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+
+  // Mobile bar
+  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
+  const mobMap = { search:'mob-search', alerts:'mob-alerts', bots:'mob-bots', messages:'mob-messages', submit:'mob-submit' };
+  if (mobMap[name]) document.getElementById(mobMap[name])?.classList.add('active');
+}
+
+function fillSearch(text) {
+  document.getElementById('search-field').value = text;
+}
+
+function runSearch() {
+  const q = document.getElementById('search-field').value || 'Cook, Siem Reap';
+  document.getElementById('results-title').textContent = '"' + q + '"';
+  document.getElementById('results-subtitle').textContent = '12 candidates found · AI matched in 0.4s';
+  showScreen('results');
+}
+
+function saveAlert() {
+  showToast();
+}
+
+let toastTimeout;
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// Auto-show toast after 3 seconds
+setTimeout(showToast, 3000);
+
+// Sort chips
+document.querySelectorAll('.sort-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.sort-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+  });
+});
+
+// Lang toggle
+window.setLang = function(lang) {
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === lang);
+  });
+};
+</script>
+</body>
+</html>
