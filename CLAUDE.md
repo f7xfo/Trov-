@@ -58,3 +58,8 @@ Update in this order: 1. `03-HANDOFF.md` · 2. `01-STATE.md` · 3. `04-BUGS.md` 
 ## Who is Alex
 Non-technical founder. Wants direct recommendations + a plain-language "why".
 Iterative, action-oriented. Decisions in French, deliverables in English.
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->

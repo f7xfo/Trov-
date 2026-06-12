@@ -40,5 +40,8 @@ Thumbs.db
 uploads/
 data/
 
+# Coding agent folder (may store credentials/tokens — per specify init warning)
+.claude/
+
 # uv
 uv.lock
